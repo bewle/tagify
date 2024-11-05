@@ -27,8 +27,10 @@ export default function RootLayout({
                     publicSans.variable
                 )}
             >
-                <Navbar />
-                <Providers>{children}</Providers>
+                <Providers>
+                    <Navbar />
+                    {children}
+                </Providers>
             </body>
         </html>
     );
