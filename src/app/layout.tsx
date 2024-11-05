@@ -1,3 +1,4 @@
+import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
                     publicSans.variable
                 )}
             >
+                <Navbar />
                 <Providers>{children}</Providers>
             </body>
         </html>
