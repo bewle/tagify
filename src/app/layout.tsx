@@ -10,8 +10,8 @@ const publicSans = Public_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "change me",
-    description: "change me",
+    title: "tagify",
+    description: "tagify",
     icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
