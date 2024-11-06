@@ -1,7 +1,6 @@
 import { FileTree } from "@/components/FileTree";
 import UploadButton from "@/components/UploadButton";
 import RemoveButton from "@/components/RemoveButton";
-import GetStartedText from "@/components/GetStartedText";
 
 export default function Page() {
     return (
@@ -15,7 +14,7 @@ export default function Page() {
                     </div>
                 </div>
                 {/* <GetStartedText /> */}
-                <div>
+                <div className="max-h-[calc(100vh-10rem)] overflow-y-auto scroll-">
                     <FileTree />
                 </div>
             </div>
