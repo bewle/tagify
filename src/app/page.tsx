@@ -1,18 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-import { TreeView, type TreeDataItem } from "@/components/tree-view";
-
-const data: TreeDataItem[] = [
-    {
-        id: "1",
-        name: "Item 1",
-    },
-    {
-        id: "2",
-        name: "Item 2",
-    },
-];
+import { FileTree } from "@/components/FileTree";
 
 export default function Page() {
     return (
@@ -29,7 +18,7 @@ export default function Page() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <TreeView data={data} />
+                    <FileTree />
                 </CardContent>
             </Card>
             <Card className="flex-1 py-6 transition-colors">
