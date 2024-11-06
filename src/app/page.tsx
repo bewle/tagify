@@ -1,6 +1,7 @@
 import { FileTree } from "@/components/FileTree";
 import UploadButton from "@/components/UploadButton";
 import RemoveButton from "@/components/RemoveButton";
+import GetStartedText from "@/components/GetStartedText";
 
 export default function Page() {
     return (
@@ -13,6 +14,7 @@ export default function Page() {
                         <UploadButton />
                     </div>
                 </div>
+                <GetStartedText />
                 <div>
                     <FileTree />
                 </div>
