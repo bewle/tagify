@@ -42,8 +42,6 @@ export function FileTree() {
                     <Button
                         onClick={() => {
                             setSelectedFile(file.id);
-                            console.log("selected file:", selectedFile);
-                            console.log("file id:", file.id);
                         }}
                         variant="link"
                         className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"

@@ -6,7 +6,6 @@ import { AnimatePresence } from "framer-motion";
 
 export default function UploadButton() {
     const { files, setFiles, selectedFiles } = useFilesStore();
-    console.log(selectedFiles);
 
     if (selectedFiles.length === 0) return null;
 
