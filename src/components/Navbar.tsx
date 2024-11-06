@@ -2,7 +2,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
     return (
-        <nav className="h-20">
+        <nav className="h-20 border-b-[1px] border-border">
             <div className="container flex items-center justify-between h-full">
                 <p className="text-2xl font-bold">tagify</p>
                 <div className="flex gap-2">
