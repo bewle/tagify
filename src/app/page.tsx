@@ -14,7 +14,7 @@ export default function Page() {
                         <UploadButton />
                     </div>
                 </div>
-                <GetStartedText />
+                {/* <GetStartedText /> */}
                 <div>
                     <FileTree />
                 </div>
