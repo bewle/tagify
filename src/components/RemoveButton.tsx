@@ -14,10 +14,10 @@ export default function UploadButton() {
         <AnimatePresence>
             <Button
                 onClick={() => {
-                    selectedFiles.forEach((file) => {
-                        const e = files.filter((f) => f.id !== file);
-                        setFiles(e);
-                    });
+                    const test = files.filter(
+                        (f) => !selectedFiles.includes(f.id)
+                    );
+                    setFiles(test);
                     setSelectedFiles([]);
                 }}
                 size="icon"

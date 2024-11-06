@@ -5,11 +5,11 @@ import RemoveButton from "@/components/RemoveButton";
 
 export default function Page() {
     return (
-        <main className="container flex gap-4 py-4">
+        <main className="container flex flex-1 h-full gap-4 ">
             <Card className="w-1/4 transition-colors">
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between ">
-                        <p className="text-xl font-bold">Loaded files</p>
+                        <p className="text-xl font-bold">loaded files</p>
                         <div className="flex gap-2">
                             <RemoveButton />
                             <UploadButton />

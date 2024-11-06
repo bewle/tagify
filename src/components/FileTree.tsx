@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { useFilesStore } from "@/lib/store/files";
@@ -13,11 +12,6 @@ export function FileTree() {
         selectedFiles,
         setSelectedFiles,
     } = useFilesStore();
-
-    useEffect(() => {
-        console.log("files", files);
-        console.log("selectedFiles", selectedFiles);
-    }, [files, selectedFiles]);
 
     return (
         <div className="flex flex-col gap-2">
