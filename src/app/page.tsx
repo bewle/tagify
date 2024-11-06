@@ -1,7 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus } from "lucide-react";
 import { FileTree } from "@/components/FileTree";
+import UploadButton from "@/components/UploadButton";
 
 export default function Page() {
     return (
@@ -11,9 +10,7 @@ export default function Page() {
                     <CardTitle className="flex items-center justify-between ">
                         <p className="text-xl font-bold">Loaded files</p>
                         <div className="flex gap-4">
-                            <Button size="icon" variant="outline">
-                                <Plus />
-                            </Button>
+                            <UploadButton />
                         </div>
                     </CardTitle>
                 </CardHeader>
