@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileTree } from "@/components/FileTree";
 import UploadButton from "@/components/UploadButton";
+import RemoveButton from "@/components/RemoveButton";
 
 export default function Page() {
     return (
@@ -9,7 +10,8 @@ export default function Page() {
                 <CardHeader>
                     <CardTitle className="flex items-center justify-between ">
                         <p className="text-xl font-bold">Loaded files</p>
-                        <div className="flex gap-4">
+                        <div className="flex gap-2">
+                            <RemoveButton />
                             <UploadButton />
                         </div>
                     </CardTitle>

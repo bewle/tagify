@@ -1,8 +1,11 @@
 import { create } from 'zustand'
 
+type File = { id: string; name: string };
+
 interface FilesState {
-    files: { id: string; name: string }[]
-    addFile: (name: string) => void
+    files: File[]
+    addFile: (file: string) => void
+    setFiles: (files: File[]) => void
     selectedFile: string
     setSelectedFile: (file: string) => void
     selectedFiles: string[]
@@ -11,7 +14,8 @@ interface FilesState {
 
 export const useFilesStore = create<FilesState>()((set) => ({
     files: [],
-    addFile: (file) => set((state) => ({ files: [...state.files, { id: crypto.randomUUID().toString(), name: file }] })),
+    addFile: (file: string) => set((state) => ({ files: [...state.files, { id: crypto.randomUUID(), name: file }] })),
+    setFiles: (files: File[]) => set(() => ({ files })),
     selectedFile: "",
     setSelectedFile: (file) => set(() => ({ selectedFile: file })),
     selectedFiles: [],
