@@ -5,7 +5,13 @@ import { Checkbox } from "./ui/checkbox";
 import { useFilesStore } from "@/lib/store/files";
 
 export function FileTree() {
-    const { files, selectedFile, setSelectedFile } = useFilesStore();
+    const {
+        files,
+        selectedFile,
+        setSelectedFile,
+        selectedFiles,
+        setSelectedFiles,
+    } = useFilesStore();
 
     return (
         <div className="flex flex-col gap-2">
@@ -20,7 +26,19 @@ export function FileTree() {
                                 : "inherit",
                     }}
                 >
-                    <Checkbox className="bg-background" />
+                    <Checkbox
+                        className="bg-background"
+                        checked={selectedFiles.includes(file.id)}
+                        onCheckedChange={(checked) => {
+                            setSelectedFiles(
+                                checked
+                                    ? [...selectedFiles, file.id]
+                                    : selectedFiles.filter(
+                                          (id) => id !== file.id
+                                      )
+                            );
+                        }}
+                    />
                     <Button
                         onClick={() => {
                             setSelectedFile(file.id);
