@@ -5,7 +5,8 @@ import { useFilesStore } from "@/lib/store/files";
 import { AnimatePresence } from "framer-motion";
 
 export default function UploadButton() {
-    const { files, setFiles, selectedFiles } = useFilesStore();
+    const { files, setFiles, selectedFiles, setSelectedFiles } =
+        useFilesStore();
 
     if (selectedFiles.length === 0) return null;
 
@@ -17,6 +18,7 @@ export default function UploadButton() {
                         const e = files.filter((f) => f.id !== file);
                         setFiles(e);
                     });
+                    setSelectedFiles([]);
                 }}
                 size="icon"
                 variant="destructive"

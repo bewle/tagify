@@ -10,7 +10,9 @@ export default function UploadButton() {
     const { addFile } = useFilesStore();
 
     function handleUpload() {
-        addFile(inputRef.current?.files?.[0]?.name ?? "");
+        Array.from(inputRef.current?.files ?? []).forEach((file) => {
+            addFile(file.name);
+        });
     }
 
     return (
@@ -30,6 +32,7 @@ export default function UploadButton() {
                 type="file"
                 className="hidden"
                 accept=".mp3, .wav, .ogg, .m4a, .flac, .aac"
+                multiple
             />
         </>
     );
