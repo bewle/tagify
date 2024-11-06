@@ -29,6 +29,7 @@ export default function UploadButton() {
                 ref={inputRef}
                 type="file"
                 className="hidden"
+                accept=".mp3, .wav, .ogg, .m4a, .flac, .aac"
             />
         </>
     );

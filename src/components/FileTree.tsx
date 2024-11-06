@@ -14,9 +14,9 @@ export function FileTree() {
                     <Checkbox />
                     <Button
                         variant="link"
-                        className="p-0 font-mono text-sm tracking-tight"
+                        className="justify-start max-w-full p-0 pr-6 font-mono text-sm tracking-tight "
                     >
-                        {file}
+                        <span className="truncate ">{file}</span>
                     </Button>
                 </div>
             ))}
