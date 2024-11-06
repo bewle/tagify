@@ -3,12 +3,14 @@
 import { ArrowUpFromLine } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRef } from "react";
+import { useFilesStore } from "@/lib/store/files";
 
 export default function UploadButton() {
     const inputRef = useRef<HTMLInputElement>(null);
+    const { addFile } = useFilesStore();
 
     function handleUpload() {
-        console.log(inputRef.current?.files);
+        addFile(inputRef.current?.files?.[0]?.name ?? "");
     }
 
     return (
