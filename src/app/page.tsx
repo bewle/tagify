@@ -19,7 +19,7 @@ export default function Page() {
                     <FileTree />
                 </div>
             </div>
-            <div className="flex-1 p-6 transition-colors border-r border-border">
+            <div className="relative flex-1 p-6 transition-colors border-r border-border">
                 <FileEditor />
             </div>
         </main>
