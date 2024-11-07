@@ -2,43 +2,58 @@
 import { RefreshCcw, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useFilesStore } from "@/lib/store/files";
-import { AnimatePresence } from "framer-motion";
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "./ui/dialog";
 
-export default function UploadButton() {
+export default function RemoveButton() {
     const { files, setFiles, selectedFiles, setSelectedFiles } =
         useFilesStore();
 
-    if (files.length <= 1)
+    if (files.length >= 1 && selectedFiles.length === 0)
         return (
             <Dialog>
-                <DialogTrigger>
+                <DialogTrigger asChild>
                     <Button size="icon" variant="outline">
                         <RefreshCcw />
                     </Button>
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Are you absolutely sure?</DialogTitle>
+                        <DialogTitle>remove all files?</DialogTitle>
                         <DialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your account and remove your data from our
-                            servers.
+                            this action cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline">cancel</Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                            <Button
+                                onClick={() => {
+                                    setFiles([]);
+                                    setSelectedFiles([]);
+                                }}
+                                variant="destructive"
+                            >
+                                remove
+                            </Button>
+                        </DialogClose>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         );
 
-    return (
-        <AnimatePresence>
+    if (selectedFiles.length >= 1)
+        return (
             <Button
                 onClick={() => {
                     const test = files.filter(
@@ -52,6 +67,5 @@ export default function UploadButton() {
             >
                 <Trash2 />
             </Button>
-        </AnimatePresence>
-    );
+        );
 }

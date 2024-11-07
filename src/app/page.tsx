@@ -14,7 +14,7 @@ export default function Page() {
                     </div>
                 </div>
                 {/* <GetStartedText /> */}
-                <div className="max-h-[calc(100vh-10rem)] overflow-y-auto scroll-">
+                <div className="max-h-[calc(100vh-10rem)] overflow-y-auto overflow-x-hidden ">
                     <FileTree />
                 </div>
             </div>
