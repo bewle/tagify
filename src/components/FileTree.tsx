@@ -17,7 +17,7 @@ export function FileTree() {
         <div className="flex flex-col gap-2">
             {files.map((file) => (
                 <div
-                    className="flex items-center gap-2 pl-2 rounded-md"
+                    className="flex items-center gap-2 pl-2 transition-colors rounded-md"
                     key={file.id}
                     style={{
                         backgroundColor:
@@ -27,7 +27,7 @@ export function FileTree() {
                     }}
                 >
                     <Checkbox
-                        className="bg-background"
+                        className="transition-colors bg-background"
                         checked={selectedFiles.includes(file.id)}
                         onCheckedChange={(checked) => {
                             setSelectedFiles(
