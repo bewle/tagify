@@ -1,8 +1,6 @@
 "use client";
 import { Moon, Sun } from "lucide-react";
-import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
-import { cn } from "@/lib/utils";
 import { type ClassValue } from "clsx";
 import { Switch } from "./ui/switch";
 export default function ThemeToggle({
