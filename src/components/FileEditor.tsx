@@ -1,7 +1,6 @@
 import { FileQuestion } from "lucide-react";
 import FileEditorForm from "./FileEditorForm";
 import { Card } from "./ui/card";
-import UploadButton from "./UploadButton";
 
 export default function FileEditor() {
     return (
