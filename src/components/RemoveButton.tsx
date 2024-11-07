@@ -56,10 +56,10 @@ export default function RemoveButton() {
         return (
             <Button
                 onClick={() => {
-                    const test = files.filter(
+                    const filteredFiles = files.filter(
                         (f) => !selectedFiles.includes(f.id)
                     );
-                    setFiles(test);
+                    setFiles(filteredFiles);
                     setSelectedFiles([]);
                 }}
                 size="icon"

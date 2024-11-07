@@ -1,6 +1,7 @@
 import { FileTree } from "@/components/FileTree";
 import UploadButton from "@/components/UploadButton";
 import RemoveButton from "@/components/RemoveButton";
+import FileEditor from "@/components/FileEditor";
 
 export default function Page() {
     return (
@@ -19,7 +20,7 @@ export default function Page() {
                 </div>
             </div>
             <div className="flex-1 p-6 transition-colors border-r border-border">
-                <div>test</div>
+                <FileEditor />
             </div>
         </main>
     );
