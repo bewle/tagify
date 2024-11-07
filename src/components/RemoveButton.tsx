@@ -14,8 +14,13 @@ import {
 } from "./ui/dialog";
 
 export default function RemoveButton() {
-    const { files, setFiles, selectedFiles, setSelectedFiles } =
-        useFilesStore();
+    const {
+        files,
+        setFiles,
+        selectedFiles,
+        setSelectedFiles,
+        setSelectedFile,
+    } = useFilesStore();
 
     if (files.length >= 1 && selectedFiles.length === 0)
         return (
@@ -40,6 +45,7 @@ export default function RemoveButton() {
                             <Button
                                 onClick={() => {
                                     setFiles([]);
+                                    setSelectedFile("");
                                     setSelectedFiles([]);
                                 }}
                                 variant="destructive"
