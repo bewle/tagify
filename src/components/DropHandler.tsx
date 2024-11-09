@@ -1,11 +1,12 @@
 "use client";
 
+import { toast } from "@/hooks/use-toast";
 import { useFilesStore } from "@/lib/store/files";
 import { useState, useEffect } from "react";
 
 export default function DropHandler() {
     const [isDragging, setIsDragging] = useState(false);
-    const { addFile } = useFilesStore();
+    const { addFile, files } = useFilesStore();
 
     useEffect(() => {
         const handleDragOver = (e: DragEvent) => {
@@ -33,12 +34,25 @@ export default function DropHandler() {
             e.stopPropagation();
             setIsDragging(false);
 
-            if (e.dataTransfer?.files) {
-                const items = Array.from(e.dataTransfer.files);
-                items.forEach((file) => {
+            // if (e.dataTransfer?.files) {
+            //     const items = Array.from(e.dataTransfer.files);
+            //     items.forEach((file) => {
+            //         addFile(file.name);
+            //     });
+            // }
+            Array.from(e.dataTransfer?.files ?? []).forEach((file) => {
+                if (files.some((f) => f.name === file.name)) {
+                    console.log(
+                        "a file already exists, attempting to show toast"
+                    );
+                    toast({
+                        title: "one or more files are already loaded",
+                        description: "click for more info",
+                    });
+                } else {
                     addFile(file.name);
-                });
-            }
+                }
+            });
         };
 
         window.addEventListener("dragover", handleDragOver);
@@ -50,7 +64,7 @@ export default function DropHandler() {
             window.removeEventListener("dragleave", handleDragLeave);
             window.removeEventListener("drop", handleDrop);
         };
-    }, [isDragging, addFile]);
+    }, [isDragging, addFile, files]);
 
     if (!isDragging) return null;
 

@@ -20,8 +20,9 @@ export function FileTree() {
         selectedFiles,
         setSelectedFiles,
     } = useFilesStore();
-
     const { selectMode } = useSelectModeStore();
+
+    console.log(selectedFiles);
 
     return (
         <div className="flex flex-col">
@@ -70,11 +71,7 @@ export function FileTree() {
                             <ContextMenuItem
                                 onClick={() => {
                                     if (selectedFiles.includes(file.id)) {
-                                        setSelectedFiles(
-                                            selectedFiles.filter(
-                                                (id) => id !== file.id
-                                            )
-                                        );
+                                        console.log("clearing selected files");
                                     }
                                     setFiles(
                                         files.filter((f) => f.id !== file.id)
