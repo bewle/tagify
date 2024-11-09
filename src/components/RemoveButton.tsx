@@ -27,7 +27,7 @@ export default function RemoveButton() {
 
     return (
         <>
-            {selectMode && (
+            {selectMode ? (
                 <Button
                     onClick={() => {
                         setFiles(
@@ -42,43 +42,44 @@ export default function RemoveButton() {
                 >
                     <Trash2 />
                 </Button>
+            ) : (
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button
+                            size="icon"
+                            variant="outline"
+                            disabled={files.length === 0}
+                        >
+                            <RefreshCcw />
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>remove all files?</DialogTitle>
+                            <DialogDescription>
+                                this action cannot be undone.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <DialogClose asChild>
+                                <Button variant="outline">cancel</Button>
+                            </DialogClose>
+                            <DialogClose asChild>
+                                <Button
+                                    onClick={() => {
+                                        setFiles([]);
+                                        setSelectedFile("");
+                                        setSelectedFiles([]);
+                                    }}
+                                    variant="destructive"
+                                >
+                                    remove
+                                </Button>
+                            </DialogClose>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             )}
-            <Dialog>
-                <DialogTrigger asChild>
-                    <Button
-                        size="icon"
-                        variant="outline"
-                        disabled={files.length === 0}
-                    >
-                        <RefreshCcw />
-                    </Button>
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>remove all files?</DialogTitle>
-                        <DialogDescription>
-                            this action cannot be undone.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline">cancel</Button>
-                        </DialogClose>
-                        <DialogClose asChild>
-                            <Button
-                                onClick={() => {
-                                    setFiles([]);
-                                    setSelectedFile("");
-                                    setSelectedFiles([]);
-                                }}
-                                variant="destructive"
-                            >
-                                remove
-                            </Button>
-                        </DialogClose>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
         </>
     );
 }

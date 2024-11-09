@@ -3,6 +3,7 @@ import tailwindcssAnimate from 'tailwindcss-animate';
 import tailwindcssMotion from "tailwindcss-motion";
 import tailwindcssTypography from "@tailwindcss/typography";
 import tailwindcssTextShadow from "tailwindcss-textshadow";
+import tailwindcssDebugScreens from "tailwindcss-debug-screens";
 
 const config = {
 	darkMode: ["class"],
@@ -66,7 +67,7 @@ const config = {
 			},
 		},
 	},
-	plugins: [tailwindcssAnimate, tailwindcssMotion, tailwindcssTypography, tailwindcssTextShadow],
+	plugins: [tailwindcssAnimate, tailwindcssMotion, tailwindcssTypography, tailwindcssTextShadow, tailwindcssDebugScreens],
 };
 
 export default config;
