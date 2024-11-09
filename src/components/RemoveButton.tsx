@@ -23,7 +23,7 @@ export default function RemoveButton() {
         setSelectedFile,
     } = useFilesStore();
 
-    const { selectMode } = useSelectModeStore();
+    const { selectMode, setSelectMode } = useSelectModeStore();
 
     return (
         <>
@@ -34,6 +34,7 @@ export default function RemoveButton() {
                             files.filter((f) => !selectedFiles.includes(f.id))
                         );
                         setSelectedFiles([]);
+                        setSelectMode(false);
                     }}
                     size="icon"
                     variant="destructive"
