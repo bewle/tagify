@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Public_Sans } from "next/font/google";
+import DropHandler from "@/components/DropHandler";
 
 const publicSans = Public_Sans({
     subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({
                 )}
             >
                 <Providers>
+                    <DropHandler />
                     <Navbar />
                     {children}
                 </Providers>
