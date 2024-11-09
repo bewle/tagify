@@ -28,7 +28,6 @@ export default function UploadButton() {
 
     return (
         <>
-            <Toaster />
             <Button
                 onClick={() => {
                     inputRef.current?.click();
@@ -38,6 +37,7 @@ export default function UploadButton() {
             >
                 <ArrowUpFromLine />
             </Button>
+            <Toaster />
             <input
                 onChange={handleUpload}
                 ref={inputRef}

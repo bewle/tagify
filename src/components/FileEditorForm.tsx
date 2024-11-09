@@ -12,6 +12,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useFilesStore } from "@/lib/store/files";
 
 type FormSchema = {
     title?: string;
@@ -22,6 +23,8 @@ type FormSchema = {
 };
 
 export default function FileEditorForm() {
+    const { files } = useFilesStore();
+
     const form = useForm<FormSchema>({
         defaultValues: {
             title: "",
@@ -49,7 +52,11 @@ export default function FileEditorForm() {
                         <FormItem>
                             <FormLabel>Title</FormLabel>
                             <FormControl>
-                                <Input placeholder="Sandstorm" {...field} />
+                                <Input
+                                    disabled={files.length === 0}
+                                    placeholder="Sandstorm"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormDescription>
                                 this is the title of the audio file

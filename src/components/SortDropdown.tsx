@@ -18,10 +18,13 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { useFilesStore } from "@/lib/store/files";
 
 const options = ["name", "size", "type", "modified"];
 
 export function SortDropdown() {
+    const { files } = useFilesStore();
+
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
 
@@ -29,6 +32,7 @@ export function SortDropdown() {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
+                    disabled={files.length === 0}
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}

@@ -6,8 +6,8 @@ export default function Page() {
     return (
         <>
             {/* <DropHandler /> */}
-            <main className="container flex flex-1 h-full ">
-                <div className="flex flex-col w-1/4 gap-4 p-6 transition-colors border-x border-border">
+            <main className="flex flex-1 h-full 2xl:container ">
+                <div className="flex flex-col gap-4 p-6 transition-colors 2xl:w-1/4 xl:w-1/3 border-x border-border">
                     <div className="flex items-center justify-between ">
                         <FileTreeButtons />
                     </div>
