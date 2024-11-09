@@ -2,12 +2,11 @@ import { FileTree } from "@/components/FileTree";
 import UploadButton from "@/components/UploadButton";
 import RemoveButton from "@/components/RemoveButton";
 import FileEditor from "@/components/FileEditor";
-import DropHandler from "@/components/DropHandler";
 
 export default function Page() {
     return (
         <>
-            <DropHandler />
+            {/* <DropHandler /> */}
             <main className="container flex flex-1 h-full ">
                 <div className="flex flex-col w-1/4 gap-4 p-6 transition-colors border-x border-border">
                     <div className="flex items-center justify-between ">
