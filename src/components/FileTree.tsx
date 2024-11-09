@@ -4,10 +4,17 @@ import { useSelectModeStore } from "@/lib/store/select-mode";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { useFilesStore } from "@/lib/store/files";
+import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuTrigger,
+} from "./ui/context-menu";
 
 export function FileTree() {
     const {
         files,
+        setFiles,
         selectedFile,
         setSelectedFile,
         selectedFiles,
@@ -44,15 +51,40 @@ export function FileTree() {
                             }}
                         />
                     )}
-                    <Button
-                        onClick={() => {
-                            setSelectedFile(file.id);
-                        }}
-                        variant="link"
-                        className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"
-                    >
-                        <span className="truncate">{file.name}</span>
-                    </Button>
+                    <ContextMenu>
+                        <ContextMenuTrigger asChild>
+                            <Button
+                                onClick={() => {
+                                    setSelectedFile(file.id);
+                                }}
+                                variant="link"
+                                className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"
+                            >
+                                <span className="truncate">{file.name}</span>
+                            </Button>
+                        </ContextMenuTrigger>
+                        <ContextMenuContent>
+                            <ContextMenuItem>
+                                <span>select</span>
+                            </ContextMenuItem>
+                            <ContextMenuItem
+                                onClick={() => {
+                                    if (selectedFiles.includes(file.id)) {
+                                        setSelectedFiles(
+                                            selectedFiles.filter(
+                                                (id) => id !== file.id
+                                            )
+                                        );
+                                    }
+                                    setFiles(
+                                        files.filter((f) => f.id !== file.id)
+                                    );
+                                }}
+                            >
+                                <span className="text-destructive">delete</span>
+                            </ContextMenuItem>
+                        </ContextMenuContent>
+                    </ContextMenu>
                 </div>
             ))}
         </div>
