@@ -12,6 +12,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./ui/dialog";
+import { useSelectModeStore } from "@/lib/store/select-mode";
 
 export default function RemoveButton() {
     const {
@@ -22,10 +23,27 @@ export default function RemoveButton() {
         setSelectedFile,
     } = useFilesStore();
 
+    const { selectMode } = useSelectModeStore();
+
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                {selectedFiles.length === 0 ? (
+        <>
+            {selectMode && (
+                <Button
+                    onClick={() => {
+                        setFiles(
+                            files.filter((f) => !selectedFiles.includes(f.id))
+                        );
+                        setSelectedFiles([]);
+                    }}
+                    size="icon"
+                    variant="destructive"
+                    disabled={selectedFiles.length === 0}
+                >
+                    <Trash2 />
+                </Button>
+            )}
+            <Dialog>
+                <DialogTrigger asChild>
                     <Button
                         size="icon"
                         variant="outline"
@@ -33,47 +51,33 @@ export default function RemoveButton() {
                     >
                         <RefreshCcw />
                     </Button>
-                ) : (
-                    <Button
-                        onClick={() => {
-                            const filteredFiles = files.filter(
-                                (f) => !selectedFiles.includes(f.id)
-                            );
-                            setFiles(filteredFiles);
-                            setSelectedFiles([]);
-                        }}
-                        size="icon"
-                        variant="destructive"
-                    >
-                        <Trash2 />
-                    </Button>
-                )}
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>remove all files?</DialogTitle>
-                    <DialogDescription>
-                        this action cannot be undone.
-                    </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                    <DialogClose asChild>
-                        <Button variant="outline">cancel</Button>
-                    </DialogClose>
-                    <DialogClose asChild>
-                        <Button
-                            onClick={() => {
-                                setFiles([]);
-                                setSelectedFile("");
-                                setSelectedFiles([]);
-                            }}
-                            variant="destructive"
-                        >
-                            remove
-                        </Button>
-                    </DialogClose>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>remove all files?</DialogTitle>
+                        <DialogDescription>
+                            this action cannot be undone.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline">cancel</Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                            <Button
+                                onClick={() => {
+                                    setFiles([]);
+                                    setSelectedFile("");
+                                    setSelectedFiles([]);
+                                }}
+                                variant="destructive"
+                            >
+                                remove
+                            </Button>
+                        </DialogClose>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
+        </>
     );
 }

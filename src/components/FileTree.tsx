@@ -1,5 +1,6 @@
 "use client";
 
+import { useSelectModeStore } from "@/lib/store/select-mode";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { useFilesStore } from "@/lib/store/files";
@@ -12,6 +13,8 @@ export function FileTree() {
         selectedFiles,
         setSelectedFiles,
     } = useFilesStore();
+
+    const { selectMode } = useSelectModeStore();
 
     return (
         <div className="flex flex-col">
@@ -26,19 +29,21 @@ export function FileTree() {
                                 : "inherit",
                     }}
                 >
-                    <Checkbox
-                        className="transition-colors bg-background"
-                        checked={selectedFiles.includes(file.id)}
-                        onCheckedChange={(checked) => {
-                            setSelectedFiles(
-                                checked
-                                    ? [...selectedFiles, file.id]
-                                    : selectedFiles.filter(
-                                          (id) => id !== file.id
-                                      )
-                            );
-                        }}
-                    />
+                    {selectMode && (
+                        <Checkbox
+                            className="transition-colors bg-background"
+                            checked={selectedFiles.includes(file.id)}
+                            onCheckedChange={(checked) => {
+                                setSelectedFiles(
+                                    checked
+                                        ? [...selectedFiles, file.id]
+                                        : selectedFiles.filter(
+                                              (id) => id !== file.id
+                                          )
+                                );
+                            }}
+                        />
+                    )}
                     <Button
                         onClick={() => {
                             setSelectedFile(file.id);
