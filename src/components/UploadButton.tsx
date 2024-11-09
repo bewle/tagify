@@ -1,5 +1,6 @@
 "use client";
 
+import { Toaster } from "@/components/ui/toaster";
 import { ArrowUpFromLine } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRef } from "react";
@@ -16,8 +17,8 @@ export default function UploadButton() {
             if (files.some((f) => f.name === file.name)) {
                 console.log("a file already exists, attempting to show toast");
                 toast({
-                    title: "File already exists",
-                    description: "Please choose a different file.",
+                    title: "one or more files are already loaded",
+                    description: "click for more info",
                 });
             } else {
                 addFile(file.name);
@@ -27,6 +28,7 @@ export default function UploadButton() {
 
     return (
         <>
+            <Toaster />
             <Button
                 onClick={() => {
                     inputRef.current?.click();

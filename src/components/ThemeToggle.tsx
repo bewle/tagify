@@ -16,7 +16,8 @@ export default function ThemeToggle({
         | "secondary"
         | "destructive";
 }) {
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme, resolvedTheme } = useTheme();
+    console.log(theme);
 
     return (
         <div className="flex items-center gap-2">
