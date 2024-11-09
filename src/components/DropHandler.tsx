@@ -50,7 +50,11 @@ export default function DropHandler() {
                         description: "click for more info",
                     });
                 } else {
-                    addFile(file.name);
+                    addFile({
+                        id: crypto.randomUUID(),
+                        name: file.name,
+                        data: new Blob([file]),
+                    });
                 }
             });
         };

@@ -1,7 +1,4 @@
-"use client";
-
 import { useForm } from "react-hook-form";
-
 import {
     Form,
     FormControl,
@@ -24,7 +21,6 @@ type FormSchema = {
 
 export default function FileEditorForm() {
     const { files } = useFilesStore();
-
     const form = useForm<FormSchema>({
         defaultValues: {
             title: "",
@@ -54,7 +50,7 @@ export default function FileEditorForm() {
                             <FormControl>
                                 <Input
                                     disabled={files.length === 0}
-                                    placeholder="Sandstorm"
+                                    placeholder={"Sandstorm"}
                                     {...field}
                                 />
                             </FormControl>

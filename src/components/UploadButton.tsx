@@ -21,7 +21,31 @@ export default function UploadButton() {
                     description: "click for more info",
                 });
             } else {
-                addFile(file.name);
+                const file = e.target.files?.[0]; // Get the first file
+
+                if (file) {
+                    addFile({
+                        id: crypto.randomUUID(),
+                        name: file.name,
+                        data: new Blob([file]),
+                    });
+                }
+
+                // if (file) {
+                //     const reader = new FileReader();
+
+                //     reader.onload = () => {
+                //         const buffer = reader.result;
+                //         console.log("File buffer:", buffer);
+                //         addFile({
+                //             id: crypto.randomUUID(),
+                //             name: file.name,
+                //             data: new Blob([buffer as BlobPart]),
+                //         });
+                //     };
+
+                //     reader.readAsArrayBuffer(file);
+                // }
             }
         });
     }
