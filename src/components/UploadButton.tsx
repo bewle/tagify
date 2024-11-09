@@ -4,14 +4,24 @@ import { ArrowUpFromLine } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRef } from "react";
 import { useFilesStore } from "@/lib/store/files";
+import { useToast } from "@/hooks/use-toast";
 
 export default function UploadButton() {
     const inputRef = useRef<HTMLInputElement>(null);
-    const { addFile } = useFilesStore();
+    const { toast } = useToast();
+    const { addFile, files } = useFilesStore();
 
-    function handleUpload() {
-        Array.from(inputRef.current?.files ?? []).forEach((file) => {
-            addFile(file.name);
+    function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+        Array.from(e.target.files ?? []).forEach((file) => {
+            if (files.some((f) => f.name === file.name)) {
+                console.log("a file already exists, attempting to show toast");
+                toast({
+                    title: "Uh oh! Something went wrong.",
+                    description: "There was a problem with your request.",
+                });
+            } else {
+                addFile(file.name);
+            }
         });
     }
 
