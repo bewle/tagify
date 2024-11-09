@@ -16,8 +16,8 @@ export default function UploadButton() {
             if (files.some((f) => f.name === file.name)) {
                 console.log("a file already exists, attempting to show toast");
                 toast({
-                    title: "Uh oh! Something went wrong.",
-                    description: "There was a problem with your request.",
+                    title: "File already exists",
+                    description: "Please choose a different file.",
                 });
             } else {
                 addFile(file.name);
