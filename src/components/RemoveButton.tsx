@@ -22,20 +22,19 @@ export default function RemoveButton() {
         setSelectedFiles,
         setSelectedFile,
     } = useFilesStore();
-
     const { selectMode, setSelectMode } = useSelectModeStore();
+
+    function handleRemove() {
+        setFiles(files.filter((f) => !selectedFiles.includes(f.id)));
+        setSelectedFiles([]);
+        setSelectMode(false);
+    }
 
     return (
         <>
             {selectMode ? (
                 <Button
-                    onClick={() => {
-                        setFiles(
-                            files.filter((f) => !selectedFiles.includes(f.id))
-                        );
-                        setSelectedFiles([]);
-                        setSelectMode(false);
-                    }}
+                    onClick={handleRemove}
                     size="icon"
                     variant="destructive"
                     disabled={selectedFiles.length === 0}

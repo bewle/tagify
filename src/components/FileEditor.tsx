@@ -10,7 +10,7 @@ export default function FileEditor() {
 
     return (
         <>
-            {selectedFile ? (
+            {!selectedFile ? (
                 <>
                     <div className="absolute top-0 left-0 grid w-full h-full place-items-center">
                         {/* <div className="rounded-md bg-background size-64"></div> */}
