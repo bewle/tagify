@@ -22,66 +22,77 @@ export function FileTree() {
     } = useFilesStore();
     const { selectMode } = useSelectModeStore();
 
+    console.log("selectedFile: ", selectedFile);
+
     return (
         <div className="flex flex-col">
-            {files.map((file) => (
-                <div
-                    className="flex items-center gap-2 pl-2 transition-colors rounded-md"
-                    key={file.id}
-                    style={{
-                        backgroundColor:
-                            selectedFile === file.id
-                                ? "hsl(var(--muted))"
-                                : "inherit",
-                    }}
-                >
-                    {selectMode && (
-                        <Checkbox
-                            className="transition-colors bg-background"
-                            checked={selectedFiles.includes(file.id)}
-                            onCheckedChange={(checked) => {
-                                setSelectedFiles(
-                                    checked
-                                        ? [...selectedFiles, file.id]
-                                        : selectedFiles.filter(
-                                              (id) => id !== file.id
-                                          )
-                                );
-                            }}
-                        />
-                    )}
-                    <ContextMenu>
-                        <ContextMenuTrigger asChild>
-                            <Button
-                                onClick={() => {
-                                    setSelectedFile(file.id);
-                                }}
-                                variant="link"
-                                className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"
-                            >
-                                <span className="truncate">{file.name}</span>
-                            </Button>
-                        </ContextMenuTrigger>
-                        <ContextMenuContent>
-                            <ContextMenuItem>
-                                <span>select</span>
-                            </ContextMenuItem>
-                            <ContextMenuItem
-                                onClick={() => {
-                                    if (selectedFiles.includes(file.id)) {
-                                        console.log("clearing selected files");
-                                    }
-                                    setFiles(
-                                        files.filter((f) => f.id !== file.id)
+            {files.map((file) => {
+                console.log("file: ", file);
+                return (
+                    <div
+                        className="flex items-center gap-2 pl-2 transition-colors rounded-md"
+                        key={file.id}
+                        style={{
+                            backgroundColor:
+                                selectedFile === file.id
+                                    ? "hsl(var(--muted))"
+                                    : "inherit",
+                        }}
+                    >
+                        {selectMode && (
+                            <Checkbox
+                                className="transition-colors bg-background"
+                                checked={selectedFiles.includes(file.id)}
+                                onCheckedChange={(checked) => {
+                                    setSelectedFiles(
+                                        checked
+                                            ? [...selectedFiles, file.id]
+                                            : selectedFiles.filter(
+                                                  (id) => id !== file.id
+                                              )
                                     );
                                 }}
-                            >
-                                <span className="text-destructive">delete</span>
-                            </ContextMenuItem>
-                        </ContextMenuContent>
-                    </ContextMenu>
-                </div>
-            ))}
+                            />
+                        )}
+                        <ContextMenu>
+                            <ContextMenuTrigger asChild>
+                                <Button
+                                    onClick={() => {
+                                        setSelectedFile(file.id);
+                                    }}
+                                    variant="link"
+                                    className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"
+                                >
+                                    <span className="truncate">
+                                        {file.name}
+                                    </span>
+                                </Button>
+                            </ContextMenuTrigger>
+                            <ContextMenuContent>
+                                <ContextMenuItem>
+                                    <span>select</span>
+                                </ContextMenuItem>
+                                <ContextMenuItem
+                                    onClick={() => {
+                                        if (selectedFile === file.id) {
+                                            setSelectedFile("");
+                                        }
+                                        setFiles(
+                                            files.filter(
+                                                (f) => f.id !== file.id
+                                            )
+                                        );
+                                    }}
+                                >
+                                    <span className="text-destructive">
+                                        delete
+                                    </span>
+                                </ContextMenuItem>
+                            </ContextMenuContent>
+                        </ContextMenu>
+                    </div>
+                );
+            })}
         </div>
     );
 }

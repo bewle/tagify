@@ -21,15 +21,17 @@ export default function UploadButton() {
                     description: "click for more info",
                 });
             } else {
-                const file = e.target.files?.[0]; // Get the first file
+                const uploadedFiles = e.target.files;
 
-                if (file) {
-                    const blob = new Blob([file]);
+                if (uploadedFiles) {
+                    Array.from(uploadedFiles).forEach((file) => {
+                        const blob = new Blob([file]);
 
-                    addFile({
-                        id: crypto.randomUUID(),
-                        name: file.name,
-                        data: blob,
+                        addFile({
+                            id: crypto.randomUUID(),
+                            name: file.name,
+                            data: blob,
+                        });
                     });
                 }
             }

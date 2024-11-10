@@ -25,7 +25,7 @@ type FormSchema = {
 };
 
 export default function FileEditorForm() {
-    const { files } = useFilesStore();
+    const { files, selectedFile } = useFilesStore();
     const [tags, setTags] = useState<IAudioMetadata | undefined>();
     const form = useForm<FormSchema>({
         defaultValues: {
@@ -38,8 +38,9 @@ export default function FileEditorForm() {
     });
 
     useEffect(() => {
-        if (files.length > 0 && files[0]?.data) {
-            const blob = new Blob([files[0].data]);
+        if (selectedFile && files.length > 0 && files[0]?.data) {
+            const file = files.find((f) => f.id === selectedFile);
+            const blob = new Blob([file?.data as BlobPart]);
             getTags(blob)
                 .then((e) => {
                     setTags(e);
@@ -48,7 +49,7 @@ export default function FileEditorForm() {
                     console.error(error);
                 });
         }
-    }, [files]);
+    }, [selectedFile, files]);
 
     function onSubmit(data: FormSchema) {
         console.log(data);
@@ -77,7 +78,7 @@ export default function FileEditorForm() {
                                             height={64}
                                             className="transition-opacity duration-100 rounded-sm size-64 group-hover:opacity-50"
                                         />
-                                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 transition-all rounded-sm opacity-0 size-64 group-hover:opacity-100">
+                                        <div className="absolute inset-0 flex items-center justify-center gap-2 transition-all rounded-sm opacity-0 size-64 group-hover:opacity-100">
                                             <Button
                                                 size="icon"
                                                 variant="outline"
