@@ -12,9 +12,9 @@ import { useFilesStore } from "@/lib/store/files";
 import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
 import type { IAudioMetadata } from "music-metadata";
-import { CircleX, ImagePlus, Info, Maximize2 } from "lucide-react";
+import { ImagePlus, Info } from "lucide-react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import { Button } from "./ui/button";
+import CoverPreview from "./FileEditor/CoverPreview";
 
 type FormSchema = {
     title?: string;
@@ -78,26 +78,7 @@ export default function FileEditorForm() {
                                             height={64}
                                             className="transition-opacity duration-100 rounded-sm size-64 group-hover:opacity-50"
                                         />
-                                        <div className="absolute inset-0 flex items-center justify-center gap-2 transition-all rounded-sm opacity-0 size-64 group-hover:opacity-100">
-                                            <Button
-                                                size="icon"
-                                                variant="outline"
-                                            >
-                                                <ImagePlus size={16} />
-                                            </Button>
-                                            <Button
-                                                size="icon"
-                                                variant="outline"
-                                            >
-                                                <Maximize2 size={16} />
-                                            </Button>
-                                            <Button
-                                                size="icon"
-                                                variant="outline"
-                                            >
-                                                <CircleX size={16} />
-                                            </Button>
-                                        </div>
+                                        <CoverPreview />
                                     </div>
                                 ) : (
                                     <div className="grid mb-4 rounded-sm size-64 bg-muted-foreground/50 place-items-center">

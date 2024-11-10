@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/popover";
 import { useFilesStore } from "@/lib/store/files";
 
-const options = ["name", "size", "type", "modified"];
+const options = ["name", "size", "type"];
 
 export function SortDropdown() {
     const { files } = useFilesStore();
@@ -36,7 +36,7 @@ export function SortDropdown() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="justify-between "
+                    className="justify-between w-28"
                 >
                     {value
                         ? options.find((option) => option === value)
@@ -44,7 +44,7 @@ export function SortDropdown() {
                     <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50 shrink-0" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0 ">
+            <PopoverContent className="p-0 w-28">
                 <Command>
                     <CommandList>
                         <CommandEmpty>No framework found.</CommandEmpty>
