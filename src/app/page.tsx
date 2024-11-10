@@ -1,7 +1,7 @@
-import { FileTree } from "@/components/FileTree";
 import FileEditor from "@/components/FileEditor";
-import FileTreeButtons from "@/components/FileTreeButtons";
+import { FileTree } from "@/components/FileTree";
 
+import FileTreeButtons from "@/components/file-tree/FileTreeButtons";
 export default function Page() {
     return (
         <main className="flex flex-1 h-full 2xl:container">
