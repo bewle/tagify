@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -13,7 +12,9 @@ import { useFilesStore } from "@/lib/store/files";
 import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
 import type { IAudioMetadata } from "music-metadata";
-import { Info } from "lucide-react";
+import { CircleX, ImagePlus, Info, Maximize2 } from "lucide-react";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { Button } from "./ui/button";
 
 type FormSchema = {
     title?: string;
@@ -64,26 +65,63 @@ export default function FileEditorForm() {
                             <div className="w-full">test</div>
                             <div className="flex flex-col w-64 gap-2">
                                 {tags?.common.picture?.[0]?.data ? (
-                                    <Image
-                                        src={URL.createObjectURL(
-                                            new Blob([
-                                                tags.common.picture[0].data,
-                                            ])
-                                        )}
-                                        alt="cover"
-                                        width={64}
-                                        height={64}
-                                        className="rounded-sm size-64"
-                                    />
-                                ) : null}
+                                    <div className="relative p-0 rounded-sm shadow size-64 bg-background/40 group">
+                                        <Image
+                                            src={URL.createObjectURL(
+                                                new Blob([
+                                                    tags.common.picture[0].data,
+                                                ])
+                                            )}
+                                            alt="cover"
+                                            width={64}
+                                            height={64}
+                                            className="transition-opacity duration-100 rounded-sm size-64 group-hover:opacity-50"
+                                        />
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 transition-all rounded-sm opacity-0 size-64 group-hover:opacity-100">
+                                            <Button
+                                                size="icon"
+                                                variant="outline"
+                                            >
+                                                <ImagePlus size={16} />
+                                            </Button>
+                                            <Button
+                                                size="icon"
+                                                variant="outline"
+                                            >
+                                                <Maximize2 size={16} />
+                                            </Button>
+                                            <Button
+                                                size="icon"
+                                                variant="outline"
+                                            >
+                                                <CircleX size={16} />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="grid mb-4 rounded-sm size-64 bg-muted-foreground/50 place-items-center">
+                                        <ImagePlus
+                                            className="text-muted-foreground"
+                                            size={32}
+                                        />
+                                    </div>
+                                )}
                                 <FormItem>
-                                    <FormLabel className="flex items-center gap-2">
-                                        year <Info size={16} />
+                                    <FormLabel className="flex items-center gap-1">
+                                        <p>year</p>
+                                        <HoverCard openDelay={0} closeDelay={0}>
+                                            <HoverCardTrigger>
+                                                <Info size={16} />
+                                            </HoverCardTrigger>
+                                            <HoverCardContent side="top">
+                                                <p>the year of the track</p>
+                                            </HoverCardContent>
+                                        </HoverCard>
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={files.length === 0}
-                                            placeholder={"Sandstorm"}
+                                            placeholder={"2000"}
                                             {...field}
                                             value={tags?.common.year}
                                         />
@@ -96,97 +134,4 @@ export default function FileEditorForm() {
             </form>
         </Form>
     );
-}
-{
-    /* <div className="flex w-full gap-6">
-<div className="flex flex-col flex-1 w-full gap-2 ">
-    <div className="flex gap-4 *:flex-1 h-fit w-full">
-        <FormItem>
-            <FormLabel>Title</FormLabel>
-            <FormControl>
-                <Input
-                    disabled={
-                        files.length === 0
-                    }
-                    placeholder={"Sandstorm"}
-                    {...field}
-                    value={tags?.common.title}
-                />
-            </FormControl>
-            <FormDescription>
-                the title of the track
-            </FormDescription>
-        </FormItem>
-        <FormItem>
-            <FormLabel>Artist</FormLabel>
-            <FormControl>
-                <Input
-                    disabled={
-                        files.length === 0
-                    }
-                    placeholder={"Sandstorm"}
-                    {...field}
-                    value={tags?.common.artist}
-                />
-            </FormControl>
-            <FormDescription>
-                the artist of the track
-            </FormDescription>
-        </FormItem>
-    </div>
-    <div className="flex gap-4 *:flex-1 h-fit w-full">
-        <FormItem>
-            <FormLabel>Album Title</FormLabel>
-            <FormControl>
-                <Input
-                    disabled={
-                        files.length === 0
-                    }
-                    placeholder={"Sandstorm"}
-                    {...field}
-                    value={tags?.common.album}
-                />
-            </FormControl>
-            <FormDescription>
-                the album title of the track
-            </FormDescription>
-        </FormItem>
-        <FormItem>
-            <FormLabel>Album Artist</FormLabel>
-            <FormControl>
-                <Input
-                    disabled={
-                        files.length === 0
-                    }
-                    placeholder={"Sandstorm"}
-                    {...field}
-                    value={
-                        tags?.common.albumartist
-                    }
-                />
-            </FormControl>
-            <FormDescription>
-                the album artist of the track
-            </FormDescription>
-        </FormItem>
-    </div>
-</div>
-{tags?.common?.picture?.[0]?.data ? (
-    <Image
-        src={URL.createObjectURL(
-            new Blob([
-                tags.common.picture[0].data,
-            ])
-        )}
-        alt="cover"
-        width={64}
-        height={64}
-        className=" size-64"
-    />
-) : (
-    <div className="grid border-2 border-dashed border-muted-foreground/50 size-64 place-items-center">
-        no cover
-    </div>
-)}
-</div> */
 }
