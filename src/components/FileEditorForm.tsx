@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useForm } from "react-hook-form";
 import {
     Form,
@@ -6,7 +7,6 @@ import {
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFilesStore } from "@/lib/store/files";
@@ -54,44 +54,104 @@ export default function FileEditorForm() {
 
     return (
         <Form {...form}>
-            <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="w-2/3 space-y-6"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)}>
                 <FormField
                     control={form.control}
                     name="title"
                     render={({ field }) => (
-                        <>
-                            <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        disabled={files.length === 0}
-                                        placeholder={"Sandstorm"}
-                                        {...field}
-                                        value={tags?.common.title}
+                        <div className="flex flex-col w-full gap-4">
+                            <div className="flex w-full gap-6">
+                                <div className="flex flex-col flex-1 w-full gap-2 ">
+                                    <div className="flex gap-4 *:flex-1 h-fit w-full">
+                                        <FormItem>
+                                            <FormLabel>Title</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={
+                                                        files.length === 0
+                                                    }
+                                                    placeholder={"Sandstorm"}
+                                                    {...field}
+                                                    value={tags?.common.title}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                the title of the track
+                                            </FormDescription>
+                                        </FormItem>
+                                        <FormItem>
+                                            <FormLabel>Artist</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={
+                                                        files.length === 0
+                                                    }
+                                                    placeholder={"Sandstorm"}
+                                                    {...field}
+                                                    value={tags?.common.artist}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                the artist of the track
+                                            </FormDescription>
+                                        </FormItem>
+                                    </div>
+                                    <div className="flex gap-4 *:flex-1 h-fit w-full">
+                                        <FormItem>
+                                            <FormLabel>Album Title</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={
+                                                        files.length === 0
+                                                    }
+                                                    placeholder={"Sandstorm"}
+                                                    {...field}
+                                                    value={tags?.common.album}
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                the album title of the track
+                                            </FormDescription>
+                                        </FormItem>
+                                        <FormItem>
+                                            <FormLabel>Album Artist</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={
+                                                        files.length === 0
+                                                    }
+                                                    placeholder={"Sandstorm"}
+                                                    {...field}
+                                                    value={
+                                                        tags?.common.albumartist
+                                                    }
+                                                />
+                                            </FormControl>
+                                            <FormDescription>
+                                                the album artist of the track
+                                            </FormDescription>
+                                        </FormItem>
+                                    </div>
+                                </div>
+                                {tags?.common?.picture?.[0]?.data ? (
+                                    <Image
+                                        src={URL.createObjectURL(
+                                            new Blob([
+                                                tags.common.picture[0].data,
+                                            ])
+                                        )}
+                                        alt="cover"
+                                        width={64}
+                                        height={64}
+                                        className=" size-64"
                                     />
-                                </FormControl>
-                                <FormDescription>
-                                    the title of the audio file
-                                </FormDescription>
-                            </FormItem>
-                            <FormItem>
-                                <FormLabel>Artist</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        disabled={files.length === 0}
-                                        placeholder={"Sandstorm"}
-                                        {...field}
-                                        value={tags?.common.artist}
-                                    />
-                                </FormControl>
-                                <FormDescription>
-                                    the artist of the audio file
-                                </FormDescription>
-                            </FormItem>
-                        </>
+                                ) : (
+                                    <div className="grid border-2 border-dashed border-muted-foreground/50 size-64 place-items-center">
+                                        no cover
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     )}
                 />
             </form>
