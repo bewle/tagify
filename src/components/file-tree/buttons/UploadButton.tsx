@@ -2,7 +2,7 @@
 
 import { Toaster } from "@/components/ui/toaster";
 import { ArrowUpFromLine } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { useRef } from "react";
 import { useFilesStore } from "@/lib/store/files";
 import { useToast } from "@/hooks/use-toast";

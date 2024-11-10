@@ -1,6 +1,6 @@
 "use client";
 import { RefreshCcw, Trash2 } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { useFilesStore } from "@/lib/store/files";
 import {
     Dialog,
@@ -11,7 +11,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "./ui/dialog";
+} from "../../ui/dialog";
 import { useSelectModeStore } from "@/lib/store/select-mode";
 
 export default function RemoveButton() {

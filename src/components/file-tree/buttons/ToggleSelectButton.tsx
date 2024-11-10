@@ -1,7 +1,7 @@
 "use client";
 
 import { SquareMousePointer } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { useSelectModeStore } from "@/lib/store/select-mode";
 import { useFilesStore } from "@/lib/store/files";
 

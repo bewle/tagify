@@ -1,7 +1,7 @@
 "use client";
 
 import { ImagePlus, Maximize2, CircleX } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 
 export default function CoverPreview() {
     return (

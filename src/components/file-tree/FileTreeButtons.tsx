@@ -1,7 +1,7 @@
-import RemoveButton from "./RemoveButton";
-import { SortDropdown } from "./SortDropdown";
-import ToggleSelectButton from "./ToggleSelectButton";
-import UploadButton from "./UploadButton";
+import RemoveButton from "./buttons/RemoveButton";
+import { SortDropdown } from "./buttons/SortDropdown";
+import ToggleSelectButton from "./buttons/ToggleSelectButton";
+import UploadButton from "./buttons/UploadButton";
 
 export default function FileTreeButtons() {
     return (

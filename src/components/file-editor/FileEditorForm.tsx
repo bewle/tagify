@@ -13,8 +13,12 @@ import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
 import type { IAudioMetadata } from "music-metadata";
 import { ImagePlus, Info } from "lucide-react";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import CoverPreview from "./FileEditor/CoverPreview";
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "../ui/hover-card";
+import CoverPreview from "./form/CoverPreview";
 
 type FormSchema = {
     title?: string;

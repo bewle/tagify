@@ -1,7 +1,7 @@
 "use client";
 
 import { FileQuestion } from "lucide-react";
-import FileEditorForm from "./FileEditorForm";
+import FileEditorForm from "./file-editor/FileEditorForm";
 import { Card } from "./ui/card";
 import { useFilesStore } from "@/lib/store/files";
 
