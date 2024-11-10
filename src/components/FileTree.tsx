@@ -22,8 +22,6 @@ export function FileTree() {
     } = useFilesStore();
     const { selectMode } = useSelectModeStore();
 
-    console.log(selectedFiles);
-
     return (
         <div className="flex flex-col">
             {files.map((file) => (

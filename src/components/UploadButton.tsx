@@ -12,7 +12,7 @@ export default function UploadButton() {
     const { toast } = useToast();
     const { addFile, files } = useFilesStore();
 
-    function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
         Array.from(e.target.files ?? []).forEach((file) => {
             if (files.some((f) => f.name === file.name)) {
                 console.log("a file already exists, attempting to show toast");
@@ -24,28 +24,14 @@ export default function UploadButton() {
                 const file = e.target.files?.[0]; // Get the first file
 
                 if (file) {
+                    const blob = new Blob([file]);
+
                     addFile({
                         id: crypto.randomUUID(),
                         name: file.name,
-                        data: new Blob([file]),
+                        data: blob,
                     });
                 }
-
-                // if (file) {
-                //     const reader = new FileReader();
-
-                //     reader.onload = () => {
-                //         const buffer = reader.result;
-                //         console.log("File buffer:", buffer);
-                //         addFile({
-                //             id: crypto.randomUUID(),
-                //             name: file.name,
-                //             data: new Blob([buffer as BlobPart]),
-                //         });
-                //     };
-
-                //     reader.readAsArrayBuffer(file);
-                // }
             }
         });
     }

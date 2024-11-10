@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFilesStore } from "@/lib/store/files";
+import { getTags } from "@/lib/utils/get-tags";
+import { useEffect, useState } from "react";
+import type { IAudioMetadata } from "music-metadata";
 
 type FormSchema = {
     title?: string;
@@ -21,6 +24,7 @@ type FormSchema = {
 
 export default function FileEditorForm() {
     const { files } = useFilesStore();
+    const [tags, setTags] = useState<IAudioMetadata | undefined>();
     const form = useForm<FormSchema>({
         defaultValues: {
             title: "",
@@ -30,6 +34,19 @@ export default function FileEditorForm() {
             genre: "",
         },
     });
+
+    useEffect(() => {
+        if (files.length > 0 && files[0]?.data) {
+            const blob = new Blob([files[0].data]);
+            getTags(blob)
+                .then((e) => {
+                    setTags(e);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+    }, [files]);
 
     function onSubmit(data: FormSchema) {
         console.log(data);
@@ -45,20 +62,36 @@ export default function FileEditorForm() {
                     control={form.control}
                     name="title"
                     render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Title</FormLabel>
-                            <FormControl>
-                                <Input
-                                    disabled={files.length === 0}
-                                    placeholder={"Sandstorm"}
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                this is the title of the audio file
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
+                        <>
+                            <FormItem>
+                                <FormLabel>Title</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        disabled={files.length === 0}
+                                        placeholder={"Sandstorm"}
+                                        {...field}
+                                        value={tags?.common.title}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    the title of the audio file
+                                </FormDescription>
+                            </FormItem>
+                            <FormItem>
+                                <FormLabel>Artist</FormLabel>
+                                <FormControl>
+                                    <Input
+                                        disabled={files.length === 0}
+                                        placeholder={"Sandstorm"}
+                                        {...field}
+                                        value={tags?.common.artist}
+                                    />
+                                </FormControl>
+                                <FormDescription>
+                                    the artist of the audio file
+                                </FormDescription>
+                            </FormItem>
+                        </>
                     )}
                 />
             </form>
