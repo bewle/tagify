@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import {
     Form,
@@ -70,20 +69,7 @@ export default function FileEditorForm() {
                             <div className="w-full">test</div>
                             <div className="flex flex-col w-64 gap-2">
                                 {tags?.common.picture?.[0]?.data ? (
-                                    <div className="relative p-0 rounded-sm shadow size-64 bg-background/40 group">
-                                        <Image
-                                            src={URL.createObjectURL(
-                                                new Blob([
-                                                    tags.common.picture[0].data,
-                                                ])
-                                            )}
-                                            alt="cover"
-                                            width={64}
-                                            height={64}
-                                            className="transition-opacity duration-100 rounded-sm size-64 group-hover:opacity-50"
-                                        />
-                                        <CoverPreview />
-                                    </div>
+                                    <CoverPreview tags={tags} />
                                 ) : (
                                     <div className="grid mb-4 rounded-sm size-64 bg-muted-foreground/50 place-items-center">
                                         <ImagePlus
@@ -94,22 +80,28 @@ export default function FileEditorForm() {
                                 )}
                                 <FormItem>
                                     <FormLabel className="flex items-center gap-1">
-                                        <p>year</p>
+                                        <p>track number</p>
                                         <HoverCard openDelay={0} closeDelay={0}>
                                             <HoverCardTrigger>
                                                 <Info size={16} />
                                             </HoverCardTrigger>
                                             <HoverCardContent side="top">
-                                                <p>the year of the track</p>
+                                                <p>
+                                                    the position of the track in
+                                                    the album
+                                                </p>
                                             </HoverCardContent>
                                         </HoverCard>
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={files.length === 0}
-                                            placeholder={"2000"}
-                                            {...field}
-                                            value={tags?.common.year}
+                                            placeholder={"1"}
+                                            // {...field}
+                                            value={
+                                                tags?.common.track?.no ??
+                                                undefined
+                                            }
                                         />
                                     </FormControl>
                                 </FormItem>
