@@ -11,13 +11,9 @@ import { useFilesStore } from "@/lib/store/files";
 import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
 import type { IAudioMetadata } from "music-metadata";
-import { ImagePlus, Info } from "lucide-react";
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "../ui/hover-card";
+import { ImagePlus } from "lucide-react";
 import CoverPreview from "./form/CoverPreview";
+import TagHoverCard from "./form/TagHoverCard";
 
 type FormSchema = {
     title?: string;
@@ -67,7 +63,7 @@ export default function FileEditorForm() {
                     render={({ field }) => (
                         <div className="grid grid-cols-[1fr_16rem] gap-4">
                             <div className="w-full">test</div>
-                            <div className="flex flex-col w-64 gap-2">
+                            <div className="flex flex-col w-64 gap-4">
                                 {tags?.common.picture?.[0]?.data ? (
                                     <CoverPreview tags={tags} />
                                 ) : (
@@ -80,31 +76,56 @@ export default function FileEditorForm() {
                                 )}
                                 <FormItem>
                                     <FormLabel className="flex items-center gap-1">
-                                        <p>track number</p>
-                                        <HoverCard openDelay={0} closeDelay={0}>
-                                            <HoverCardTrigger>
-                                                <Info size={16} />
-                                            </HoverCardTrigger>
-                                            <HoverCardContent side="top">
-                                                <p>
-                                                    the position of the track in
-                                                    the album
-                                                </p>
-                                            </HoverCardContent>
-                                        </HoverCard>
+                                        <p>year</p>
+                                        <TagHoverCard text="the year of the track" />
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={files.length === 0}
-                                            placeholder={"1"}
-                                            // {...field}
+                                            placeholder={"2000"}
+                                            {...field}
                                             value={
-                                                tags?.common.track?.no ??
-                                                undefined
+                                                tags?.common.year ?? undefined
                                             }
                                         />
                                     </FormControl>
                                 </FormItem>
+                                <div className="flex gap-4">
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>track number</p>
+                                            <TagHoverCard text="the position of the track in the album" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                placeholder={"1"}
+                                                {...field}
+                                                value={
+                                                    tags?.common.track?.no ??
+                                                    undefined
+                                                }
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>total tracks</p>
+                                            <TagHoverCard text="the total number of tracks in the album" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                placeholder={"12"}
+                                                {...field}
+                                                value={
+                                                    tags?.common.totaltracks ??
+                                                    undefined
+                                                }
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                </div>
                             </div>
                         </div>
                     )}

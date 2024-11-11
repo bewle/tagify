@@ -8,7 +8,7 @@ import type { IAudioMetadata } from "music-metadata";
 export default function CoverPreview({ tags }: { tags: IAudioMetadata }) {
     if (!tags.common.picture?.[0]?.data) return null;
     return (
-        <div className="relative p-0 rounded-sm shadow size-64 bg-background/40 group">
+        <div className="relative p-0 mb-2 rounded-sm shadow size-64 bg-background/40 group">
             <Image
                 src={URL.createObjectURL(
                     new Blob([tags.common.picture[0].data])
