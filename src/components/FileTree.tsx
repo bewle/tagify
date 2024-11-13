@@ -10,6 +10,9 @@ import {
     ContextMenuItem,
     ContextMenuTrigger,
 } from "./ui/context-menu";
+import ConfirmationDialog from "./file-tree/ConfirmationDialog";
+import { useState } from "react";
+import { useIsChangedStore } from "@/lib/store/is-changed";
 
 export function FileTree() {
     const {
@@ -20,9 +23,9 @@ export function FileTree() {
         selectedFiles,
         setSelectedFiles,
     } = useFilesStore();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { selectMode } = useSelectModeStore();
-
-    console.log("selectedFile: ", selectedFile);
+    const { isChanged } = useIsChangedStore();
 
     return (
         <div className="flex flex-col">
@@ -58,7 +61,11 @@ export function FileTree() {
                             <ContextMenuTrigger asChild>
                                 <Button
                                     onClick={() => {
-                                        setSelectedFile(file.id);
+                                        if (isChanged) {
+                                            setIsDialogOpen(true);
+                                        } else {
+                                            setSelectedFile(file.id);
+                                        }
                                     }}
                                     variant="link"
                                     className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"
@@ -93,6 +100,10 @@ export function FileTree() {
                     </div>
                 );
             })}
+            <ConfirmationDialog
+                isOpen={isDialogOpen}
+                setIsOpen={setIsDialogOpen}
+            />
         </div>
     );
 }
