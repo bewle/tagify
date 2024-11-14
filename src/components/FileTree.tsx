@@ -68,7 +68,7 @@ export function FileTree() {
                                         }
                                     }}
                                     variant="link"
-                                    className="justify-start max-w-full p-0 pr-6 font-mono text-[13px] tracking-tight"
+                                    className="justify-start max-w-full p-0 pr-6 text-[13px] tracking-wide"
                                 >
                                     <span className="truncate">
                                         {file.name}

@@ -17,8 +17,9 @@ import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
 
 type FormSchema = {
-    title?: string;
     artist?: string;
+    title?: string;
+    albumArtist?: string;
     album?: string;
     year?: string;
     genre?: string;
@@ -30,10 +31,11 @@ type FormSchema = {
 
 export default function FileEditorForm() {
     const [tags, setTags] = useState<IAudioMetadata | undefined>();
-    const [originalTags, setOriginalTags] = useState({
+    const [originalTags, setOriginalTags] = useState<FormSchema>({
         title: "",
         artist: "",
         album: "",
+        albumArtist: "",
         year: "",
         genre: "",
         trackNumber: "",
@@ -48,6 +50,7 @@ export default function FileEditorForm() {
             title: "",
             artist: "",
             album: "",
+            albumArtist: "",
             year: "",
             genre: "",
             trackNumber: "",
@@ -94,6 +97,7 @@ export default function FileEditorForm() {
                 title: tags?.common.title ?? "",
                 artist: tags?.common.artist ?? "",
                 album: tags?.common.album ?? "",
+                albumArtist: tags?.common.albumartist ?? "",
                 year: tags?.common.year?.toString() ?? "",
                 genre: tags?.common.genre?.[0] ?? "",
                 trackNumber: tags?.common.track?.no?.toString() ?? "",
@@ -110,6 +114,7 @@ export default function FileEditorForm() {
         selectedFile,
         setIsChanged,
         tags?.common.album,
+        tags?.common.albumartist,
         tags?.common.artist,
         tags?.common.disk?.no,
         tags?.common.genre,
@@ -141,50 +146,92 @@ export default function FileEditorForm() {
             >
                 <div className="flex gap-4">
                     <div className="flex flex-col flex-1 gap-4">
-                        <div className="flex gap-2 text-2xl font-bold">
+                        <div className="flex max-w-[calc(40vw)] gap-2 text-2xl font-bold">
                             {isChanged && <span>*</span>}
                             <p className="truncate">
                                 {files.find((f) => f.id === selectedFile)?.name}
                             </p>
                         </div>
-                        <FormField
-                            control={form.control}
-                            name="artist"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="flex items-center gap-1">
-                                        <p>artist</p>
-                                        <TagHoverCard text="the artist of the track" />
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            disabled={files.length === 0}
-                                            placeholder={"Darude"}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="flex items-center gap-1">
-                                        <p>artist</p>
-                                        <TagHoverCard text="the artist of the track" />
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            disabled={files.length === 0}
-                                            placeholder={"Darude"}
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                </FormItem>
-                            )}
-                        />
+                        <div className="flex gap-4 *:flex-1">
+                            <FormField
+                                control={form.control}
+                                name="artist"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>artist</p>
+                                            <TagHoverCard text="the artist of the track" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                placeholder={"Darude"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>title</p>
+                                            <TagHoverCard text="the title of the track" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                placeholder={"Darude"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <div className="flex gap-4 *:flex-1">
+                            <FormField
+                                control={form.control}
+                                name="albumArtist"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>album artist</p>
+                                            <TagHoverCard text="the album artist of the track" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                placeholder={"Darude"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="album"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>album</p>
+                                            <TagHoverCard text="the album of the track" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                placeholder={"Before the Storm"}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                     </div>
                     <div className="flex flex-col w-64 gap-4">
                         {tags?.common.picture?.[0]?.data ? (
@@ -199,17 +246,17 @@ export default function FileEditorForm() {
                         )}
                         <FormField
                             control={form.control}
-                            name="artist"
+                            name="year"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className="flex items-center gap-1">
-                                        <p>artist</p>
-                                        <TagHoverCard text="the artist of the track" />
+                                        <p>year</p>
+                                        <TagHoverCard text="the year of the track" />
                                     </FormLabel>
                                     <FormControl>
                                         <Input
                                             disabled={files.length === 0}
-                                            placeholder={"Darude"}
+                                            placeholder={"2000"}
                                             {...field}
                                         />
                                     </FormControl>
