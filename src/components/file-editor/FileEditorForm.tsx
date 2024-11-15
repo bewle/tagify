@@ -2,9 +2,11 @@ import { useForm } from "react-hook-form";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useFilesStore } from "@/lib/store/files";
@@ -15,6 +17,7 @@ import { ImagePlus } from "lucide-react";
 import CoverPreview from "./form/CoverPreview";
 import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
+import { Textarea } from "../ui/textarea";
 
 type FormSchema = {
     artist?: string;
@@ -27,6 +30,7 @@ type FormSchema = {
     totalTracks?: string;
     discNumber?: string;
     totalDiscs?: string;
+    comment?: string;
 };
 
 export default function FileEditorForm() {
@@ -42,6 +46,7 @@ export default function FileEditorForm() {
         totalTracks: "",
         discNumber: "",
         totalDiscs: "",
+        comment: "",
     });
     const { files, selectedFile } = useFilesStore();
     const { isChanged, setIsChanged } = useIsChangedStore();
@@ -57,6 +62,7 @@ export default function FileEditorForm() {
             totalTracks: "",
             discNumber: "",
             totalDiscs: "",
+            comment: "",
         },
     });
 
@@ -92,7 +98,7 @@ export default function FileEditorForm() {
                 "totalDiscs",
                 tags?.common.totaldiscs?.toString() ?? ""
             );
-
+            form.setValue("comment", tags?.common.comment?.[0]?.text ?? "");
             setOriginalTags({
                 title: tags?.common.title ?? "",
                 artist: tags?.common.artist ?? "",
@@ -116,6 +122,7 @@ export default function FileEditorForm() {
         tags?.common.album,
         tags?.common.albumartist,
         tags?.common.artist,
+        tags?.common.comment,
         tags?.common.disk?.no,
         tags?.common.genre,
         tags?.common.title,
@@ -165,7 +172,6 @@ export default function FileEditorForm() {
                                         <FormControl>
                                             <Input
                                                 disabled={files.length === 0}
-                                                placeholder={"Darude"}
                                                 {...field}
                                             />
                                         </FormControl>
@@ -184,7 +190,6 @@ export default function FileEditorForm() {
                                         <FormControl>
                                             <Input
                                                 disabled={files.length === 0}
-                                                placeholder={"Darude"}
                                                 {...field}
                                             />
                                         </FormControl>
@@ -205,7 +210,6 @@ export default function FileEditorForm() {
                                         <FormControl>
                                             <Input
                                                 disabled={files.length === 0}
-                                                placeholder={"Darude"}
                                                 {...field}
                                             />
                                         </FormControl>
@@ -224,7 +228,6 @@ export default function FileEditorForm() {
                                         <FormControl>
                                             <Input
                                                 disabled={files.length === 0}
-                                                placeholder={"Before the Storm"}
                                                 {...field}
                                             />
                                         </FormControl>
@@ -232,6 +235,25 @@ export default function FileEditorForm() {
                                 )}
                             />
                         </div>
+                        <FormField
+                            control={form.control}
+                            name="comment"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="flex items-center gap-1">
+                                        <p>comment</p>
+                                        <TagHoverCard text="the album of the track" />
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            className="resize-none"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                     </div>
                     <div className="flex flex-col w-64 gap-4">
                         {tags?.common.picture?.[0]?.data ? (
@@ -256,13 +278,68 @@ export default function FileEditorForm() {
                                     <FormControl>
                                         <Input
                                             disabled={files.length === 0}
-                                            placeholder={"2000"}
                                             {...field}
                                         />
                                     </FormControl>
                                 </FormItem>
                             )}
                         />
+                        <FormField
+                            control={form.control}
+                            name="genre"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="flex items-center gap-1">
+                                        <p>genre</p>
+                                        <TagHoverCard text="the genre of the track" />
+                                    </FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            disabled={files.length === 0}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                </FormItem>
+                            )}
+                        />
+                        <div className="flex gap-4 *:flex-1">
+                            <FormField
+                                control={form.control}
+                                name="trackNumber"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>track number</p>
+                                            <TagHoverCard text="the track number of the track" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="totalTracks"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel className="flex items-center gap-1">
+                                            <p>total tracks</p>
+                                            <TagHoverCard text="the total number of tracks in the album" />
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                disabled={files.length === 0}
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
                     </div>
                 </div>
             </form>
