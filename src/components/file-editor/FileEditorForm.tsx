@@ -21,6 +21,7 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 import { Label } from "../ui/label";
+import TagFormField from "./form/TagFormField";
 
 export type TagFormSchema = {
     artist?: string;
@@ -160,87 +161,31 @@ export default function FileEditorForm() {
                         <div className="flex gap-4">
                             <div className="flex flex-col flex-1 gap-4">
                                 <div className="flex gap-4 *:flex-1">
-                                    <FormField
-                                        control={form.control}
+                                    <TagFormField
+                                        form={form}
                                         name="artist"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="flex items-center gap-1">
-                                                    <p>artist</p>
-                                                    <TagHoverCard text="the artist of the track" />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={
-                                                            files.length === 0
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
+                                        label="artist"
+                                        hoverCardText="the artist of the track"
                                     />
-                                    <FormField
-                                        control={form.control}
+                                    <TagFormField
+                                        form={form}
                                         name="title"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="flex items-center gap-1">
-                                                    <p>title</p>
-                                                    <TagHoverCard text="the title of the track" />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={
-                                                            files.length === 0
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
+                                        label="title"
+                                        hoverCardText="the title of the track"
                                     />
                                 </div>
                                 <div className="flex gap-4 *:flex-1">
-                                    <FormField
-                                        control={form.control}
+                                    <TagFormField
+                                        form={form}
                                         name="albumArtist"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="flex items-center gap-1">
-                                                    <p>album artist</p>
-                                                    <TagHoverCard text="the album artist of the track" />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={
-                                                            files.length === 0
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
+                                        label="album artist"
+                                        hoverCardText="the album artist of the track"
                                     />
-                                    <FormField
-                                        control={form.control}
+                                    <TagFormField
+                                        form={form}
                                         name="album"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="flex items-center gap-1">
-                                                    <p>album</p>
-                                                    <TagHoverCard text="the album of the track" />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={
-                                                            files.length === 0
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
+                                        label="album"
+                                        hoverCardText="the album of the track"
                                     />
                                 </div>
                                 <FormField
@@ -274,86 +219,30 @@ export default function FileEditorForm() {
                                         />
                                     </div>
                                 )}
-                                <FormField
-                                    control={form.control}
+                                <TagFormField
+                                    form={form}
                                     name="year"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>year</p>
-                                                <TagHoverCard text="the year of the track" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
+                                    label="year"
+                                    hoverCardText="the year of the track"
                                 />
-                                <FormField
-                                    control={form.control}
+                                <TagFormField
+                                    form={form}
                                     name="genre"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>genre</p>
-                                                <TagHoverCard text="the genre of the track" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
+                                    label="genre"
+                                    hoverCardText="the genre of the track"
                                 />
                                 <div className="flex gap-4 *:flex-1">
-                                    <FormField
-                                        control={form.control}
+                                    <TagFormField
+                                        form={form}
                                         name="trackNumber"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="flex items-center gap-1">
-                                                    <p>track number</p>
-                                                    <TagHoverCard text="the track number of the track" />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={
-                                                            files.length === 0
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
+                                        label="track number"
+                                        hoverCardText="the track number of the track"
                                     />
-                                    <FormField
-                                        control={form.control}
+                                    <TagFormField
+                                        form={form}
                                         name="totalTracks"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel className="flex items-center gap-1">
-                                                    <p>total tracks</p>
-                                                    <TagHoverCard text="the total number of tracks in the album" />
-                                                </FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        disabled={
-                                                            files.length === 0
-                                                        }
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
+                                        label="total tracks"
+                                        hoverCardText="the total number of tracks in the album"
                                     />
                                 </div>
                             </div>
