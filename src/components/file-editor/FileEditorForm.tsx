@@ -18,6 +18,7 @@ import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
 import { Textarea } from "../ui/textarea";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Button } from "../ui/button";
 
 type FormSchema = {
     artist?: string;
@@ -112,114 +113,171 @@ export default function FileEditorForm() {
         console.log(data);
     }
 
-    if (query.isLoading) {
-        return (
-            <div className="grid h-full place-items-center">
-                <LoaderCircle className="animate-spin" size={64} />
-            </div>
-        );
-    }
-
-    if (query.data)
-        return (
-            <Form {...form}>
-                <form
-                    onChange={() => {
-                        if (
-                            JSON.stringify(form.getValues()) !==
-                            JSON.stringify(originalTags)
-                        ) {
-                            setIsChanged(true);
-                        } else {
+    return (
+        <>
+            <div className="flex justify-between gap-2 text-2xl font-bold">
+                <div className="flex items-start gap-2 max-w-[calc(40vw)]">
+                    {isChanged && <span>*</span>}
+                    <p className="mb-6 truncate">
+                        {files.find((f) => f.id === selectedFile)?.name}
+                    </p>
+                </div>
+                <div className="flex gap-4">
+                    <Button
+                        disabled={!isChanged}
+                        onClick={() => {
+                            form.reset(originalTags);
                             setIsChanged(false);
-                        }
-                    }}
-                    onSubmit={form.handleSubmit(onSubmit)}
-                >
-                    <div className="flex gap-4">
-                        <div className="flex flex-col flex-1 gap-4">
-                            <div className="flex max-w-[calc(40vw)] gap-2 text-2xl font-bold">
-                                {isChanged && <span>*</span>}
-                                <p className="truncate">
-                                    {
-                                        files.find((f) => f.id === selectedFile)
-                                            ?.name
-                                    }
-                                </p>
-                            </div>
-                            <div className="flex gap-4 *:flex-1">
+                        }}
+                        variant="destructive"
+                    >
+                        discard
+                    </Button>
+                    <Button>save</Button>
+                </div>
+            </div>
+            {query.data && (
+                <Form {...form}>
+                    <form
+                        onChange={() => {
+                            if (
+                                JSON.stringify(form.getValues()) !==
+                                JSON.stringify(originalTags)
+                            ) {
+                                setIsChanged(true);
+                            } else {
+                                setIsChanged(false);
+                            }
+                        }}
+                        onSubmit={form.handleSubmit(onSubmit)}
+                    >
+                        <div className="flex gap-4">
+                            <div className="flex flex-col flex-1 gap-4">
+                                <div className="flex gap-4 *:flex-1">
+                                    <FormField
+                                        control={form.control}
+                                        name="artist"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="flex items-center gap-1">
+                                                    <p>artist</p>
+                                                    <TagHoverCard text="the artist of the track" />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={
+                                                            files.length === 0
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="title"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="flex items-center gap-1">
+                                                    <p>title</p>
+                                                    <TagHoverCard text="the title of the track" />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={
+                                                            files.length === 0
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="flex gap-4 *:flex-1">
+                                    <FormField
+                                        control={form.control}
+                                        name="albumArtist"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="flex items-center gap-1">
+                                                    <p>album artist</p>
+                                                    <TagHoverCard text="the album artist of the track" />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={
+                                                            files.length === 0
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="album"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="flex items-center gap-1">
+                                                    <p>album</p>
+                                                    <TagHoverCard text="the album of the track" />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={
+                                                            files.length === 0
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
                                 <FormField
                                     control={form.control}
-                                    name="artist"
+                                    name="comment"
                                     render={({ field }) => (
                                         <FormItem>
                                             <FormLabel className="flex items-center gap-1">
-                                                <p>artist</p>
-                                                <TagHoverCard text="the artist of the track" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="title"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>title</p>
-                                                <TagHoverCard text="the title of the track" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <div className="flex gap-4 *:flex-1">
-                                <FormField
-                                    control={form.control}
-                                    name="albumArtist"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>album artist</p>
-                                                <TagHoverCard text="the album artist of the track" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="album"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>album</p>
+                                                <p>comment</p>
                                                 <TagHoverCard text="the album of the track" />
                                             </FormLabel>
                                             <FormControl>
+                                                <Textarea
+                                                    className="transition-colors resize-none"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className="flex flex-col w-64 gap-4">
+                                {query.data?.common.picture?.[0]?.data ? (
+                                    <CoverPreview tags={query.data} />
+                                ) : (
+                                    <div className="grid mb-4 rounded-sm size-64 bg-muted-foreground/50 place-items-center">
+                                        <ImagePlus
+                                            className="text-muted-foreground"
+                                            size={32}
+                                        />
+                                    </div>
+                                )}
+                                <FormField
+                                    control={form.control}
+                                    name="year"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center gap-1">
+                                                <p>year</p>
+                                                <TagHoverCard text="the year of the track" />
+                                            </FormLabel>
+                                            <FormControl>
                                                 <Input
                                                     disabled={
                                                         files.length === 0
@@ -230,119 +288,73 @@ export default function FileEditorForm() {
                                         </FormItem>
                                     )}
                                 />
-                            </div>
-                            <FormField
-                                control={form.control}
-                                name="comment"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="flex items-center gap-1">
-                                            <p>comment</p>
-                                            <TagHoverCard text="the album of the track" />
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Textarea
-                                                className="resize-none"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="flex flex-col w-64 gap-4">
-                            {query.data?.common.picture?.[0]?.data ? (
-                                <CoverPreview tags={query.data} />
-                            ) : (
-                                <div className="grid mb-4 rounded-sm size-64 bg-muted-foreground/50 place-items-center">
-                                    <ImagePlus
-                                        className="text-muted-foreground"
-                                        size={32}
+                                <FormField
+                                    control={form.control}
+                                    name="genre"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel className="flex items-center gap-1">
+                                                <p>genre</p>
+                                                <TagHoverCard text="the genre of the track" />
+                                            </FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={
+                                                        files.length === 0
+                                                    }
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                        </FormItem>
+                                    )}
+                                />
+                                <div className="flex gap-4 *:flex-1">
+                                    <FormField
+                                        control={form.control}
+                                        name="trackNumber"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="flex items-center gap-1">
+                                                    <p>track number</p>
+                                                    <TagHoverCard text="the track number of the track" />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={
+                                                            files.length === 0
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="totalTracks"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="flex items-center gap-1">
+                                                    <p>total tracks</p>
+                                                    <TagHoverCard text="the total number of tracks in the album" />
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        disabled={
+                                                            files.length === 0
+                                                        }
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                        )}
                                     />
                                 </div>
-                            )}
-                            <FormField
-                                control={form.control}
-                                name="year"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="flex items-center gap-1">
-                                            <p>year</p>
-                                            <TagHoverCard text="the year of the track" />
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                disabled={files.length === 0}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="genre"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel className="flex items-center gap-1">
-                                            <p>genre</p>
-                                            <TagHoverCard text="the genre of the track" />
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                disabled={files.length === 0}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                    </FormItem>
-                                )}
-                            />
-                            <div className="flex gap-4 *:flex-1">
-                                <FormField
-                                    control={form.control}
-                                    name="trackNumber"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>track number</p>
-                                                <TagHoverCard text="the track number of the track" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name="totalTracks"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="flex items-center gap-1">
-                                                <p>total tracks</p>
-                                                <TagHoverCard text="the total number of tracks in the album" />
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    disabled={
-                                                        files.length === 0
-                                                    }
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        </FormItem>
-                                    )}
-                                />
                             </div>
                         </div>
-                    </div>
-                </form>
-            </Form>
-        );
+                    </form>
+                </Form>
+            )}
+        </>
+    );
 }
