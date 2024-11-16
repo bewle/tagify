@@ -11,13 +11,16 @@ import { Input } from "@/components/ui/input";
 import { useFilesStore } from "@/lib/store/files";
 import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
-import { ImagePlus } from "lucide-react";
+import { ImagePlus, LoaderCircle } from "lucide-react";
 import CoverPreview from "./form/CoverPreview";
 import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
 import { Textarea } from "../ui/textarea";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Skeleton } from "../ui/skeleton";
+import { Label } from "../ui/label";
 
 export type TagFormSchema = {
     artist?: string;
@@ -112,47 +115,48 @@ export default function FileEditorForm() {
 
     return (
         <>
-            <div className="flex justify-between gap-2 text-2xl font-bold">
-                <div className="flex items-start gap-2 max-w-[calc(40vw)]">
-                    {isChanged && <span>*</span>}
-                    <p title={file?.name} className="mb-6 truncate">
-                        {file?.name}
-                    </p>
-                </div>
-                <div className="flex gap-4">
-                    <Button
-                        disabled={!isChanged}
-                        onClick={() => {
-                            form.reset(originalTags);
+            <Form {...form}>
+                <form
+                    onChange={() => {
+                        if (
+                            JSON.stringify(form.getValues()) !==
+                            JSON.stringify(originalTags)
+                        ) {
+                            setIsChanged(true);
+                        } else {
                             setIsChanged(false);
-                        }}
-                        variant="destructive"
-                    >
-                        reset
-                    </Button>
-                    <Button
-                        disabled={!isChanged}
-                        onClick={form.handleSubmit(onSubmit)}
-                    >
-                        save
-                    </Button>
-                </div>
-            </div>
-            {query.data && (
-                <Form {...form}>
-                    <form
-                        onChange={() => {
-                            if (
-                                JSON.stringify(form.getValues()) !==
-                                JSON.stringify(originalTags)
-                            ) {
-                                setIsChanged(true);
-                            } else {
-                                setIsChanged(false);
-                            }
-                        }}
-                        onSubmit={form.handleSubmit(onSubmit)}
-                    >
+                        }
+                    }}
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="h-full"
+                >
+                    <div className="flex justify-between gap-2 text-2xl font-bold">
+                        <div className="flex items-start gap-2 max-w-[calc(40vw)]">
+                            {isChanged && <span>*</span>}
+                            <p title={file?.name} className="mb-6 truncate">
+                                {file?.name}
+                            </p>
+                        </div>
+                        <div className="flex gap-4">
+                            <Button
+                                disabled={!isChanged}
+                                onClick={() => {
+                                    form.reset(originalTags);
+                                    setIsChanged(false);
+                                }}
+                                variant="destructive"
+                            >
+                                reset
+                            </Button>
+                            <Button
+                                disabled={!isChanged}
+                                onClick={form.handleSubmit(onSubmit)}
+                            >
+                                save
+                            </Button>
+                        </div>
+                    </div>
+                    {query.data && (
                         <div className="flex gap-4">
                             <div className="flex flex-col flex-1 gap-4">
                                 <div className="flex gap-4 *:flex-1">
@@ -354,9 +358,50 @@ export default function FileEditorForm() {
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </Form>
-            )}
+                    )}
+                    {query.isLoading && (
+                        <div className="flex gap-4">
+                            <div className="flex flex-col flex-1 gap-4">
+                                <div className="flex gap-4 *:flex-1">
+                                    <div className="flex flex-col gap-2">
+                                        <Label>artist</Label>
+                                        <Skeleton className="w-full h-9" />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <Label>title</Label>
+                                        <Skeleton className="w-full h-9" />
+                                    </div>
+                                </div>
+                                <div className="flex gap-4 *:flex-1">
+                                    <div className="flex flex-col gap-2">
+                                        <Label>album artist</Label>
+                                        <Skeleton className="w-full h-9" />
+                                    </div>
+                                    <div className="flex flex-col gap-2">
+                                        <Label>album</Label>
+                                        <Skeleton className="w-full h-9" />
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <Label>comment</Label>
+                                    <Skeleton className="w-full h-14" />
+                                </div>
+                            </div>
+                            <div className="flex flex-col w-64 gap-4">
+                                <Skeleton className="w-full h-64" />
+                                <div className="flex flex-col gap-2">
+                                    <Label>year</Label>
+                                    <Skeleton className="w-full h-9" />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <Label>genre</Label>
+                                    <Skeleton className="w-full h-9" />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </form>
+            </Form>
         </>
     );
 }
