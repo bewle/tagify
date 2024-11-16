@@ -11,16 +11,15 @@ import { Input } from "@/components/ui/input";
 import { useFilesStore } from "@/lib/store/files";
 import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
-import type { IAudioMetadata } from "music-metadata";
-import { ImagePlus, LoaderCircle } from "lucide-react";
+import { ImagePlus } from "lucide-react";
 import CoverPreview from "./form/CoverPreview";
 import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
 import { Textarea } from "../ui/textarea";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 
-type FormSchema = {
+export type TagFormSchema = {
     artist?: string;
     title?: string;
     albumArtist?: string;
@@ -35,12 +34,10 @@ type FormSchema = {
 };
 
 export default function FileEditorForm() {
-    const queryClient = useQueryClient();
-    const [tags, setTags] = useState<IAudioMetadata | undefined>();
-    const [originalTags, setOriginalTags] = useState<FormSchema>({});
+    const [originalTags, setOriginalTags] = useState<TagFormSchema>({});
     const { files, selectedFile } = useFilesStore();
     const { isChanged, setIsChanged } = useIsChangedStore();
-    const form = useForm<FormSchema>({
+    const form = useForm<TagFormSchema>({
         defaultValues: {
             title: "",
             artist: "",
@@ -107,9 +104,9 @@ export default function FileEditorForm() {
 
             setIsChanged(false);
         }
-    }, [files, form, query.data, selectedFile, setIsChanged, tags]);
+    }, [files, form, query.data, selectedFile, setIsChanged]);
 
-    function onSubmit(data: FormSchema) {
+    function onSubmit(data: TagFormSchema) {
         console.log(data);
     }
 
