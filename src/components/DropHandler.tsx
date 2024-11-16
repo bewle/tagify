@@ -46,6 +46,11 @@ export default function DropHandler() {
                         title: "one or more files are already loaded",
                         description: "click for more info",
                     });
+                } else if (!file.type.startsWith("audio/")) {
+                    toast({
+                        title: "you tried to load an unsupported file type",
+                        description: "only audio files are supported",
+                    });
                 } else {
                     addFile({
                         id: crypto.randomUUID(),
