@@ -30,7 +30,6 @@ export function FileTree() {
     return (
         <div className="flex flex-col">
             {files.map((file) => {
-                console.log("file: ", file);
                 return (
                     <div
                         className="flex items-center gap-2 pl-2 transition-colors rounded-md"

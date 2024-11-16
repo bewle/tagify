@@ -42,9 +42,6 @@ export default function DropHandler() {
             // }
             Array.from(e.dataTransfer?.files ?? []).forEach((file) => {
                 if (files.some((f) => f.name === file.name)) {
-                    console.log(
-                        "a file already exists, attempting to show toast"
-                    );
                     toast({
                         title: "one or more files are already loaded",
                         description: "click for more info",

@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -18,6 +17,7 @@ import CoverPreview from "./form/CoverPreview";
 import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
 import { Textarea } from "../ui/textarea";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type FormSchema = {
     artist?: string;
@@ -34,20 +34,9 @@ type FormSchema = {
 };
 
 export default function FileEditorForm() {
+    const queryClient = useQueryClient();
     const [tags, setTags] = useState<IAudioMetadata | undefined>();
-    const [originalTags, setOriginalTags] = useState<FormSchema>({
-        title: "",
-        artist: "",
-        album: "",
-        albumArtist: "",
-        year: "",
-        genre: "",
-        trackNumber: "",
-        totalTracks: "",
-        discNumber: "",
-        totalDiscs: "",
-        comment: "",
-    });
+    const [originalTags, setOriginalTags] = useState<FormSchema>({});
     const { files, selectedFile } = useFilesStore();
     const { isChanged, setIsChanged } = useIsChangedStore();
     const form = useForm<FormSchema>({
@@ -66,71 +55,79 @@ export default function FileEditorForm() {
         },
     });
 
-    useEffect(() => {
-        if (selectedFile && files.length > 0 && files[0]?.data) {
-            const file = files.find((f) => f.id === selectedFile);
-            const blob = new Blob([file?.data as BlobPart]);
-            getTags(blob)
-                .then((e) => {
-                    setTags(e);
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-            form.setValue("title", tags?.common.title ?? "");
-            form.setValue("artist", tags?.common.artist ?? "");
-            form.setValue("album", tags?.common.album ?? "");
-            form.setValue("year", tags?.common.year?.toString() ?? "");
-            form.setValue("genre", tags?.common.genre?.[0] ?? "");
-            form.setValue(
-                "trackNumber",
-                tags?.common.track?.no?.toString() ?? ""
-            );
-            form.setValue(
-                "totalTracks",
-                tags?.common.totaltracks?.toString() ?? ""
-            );
-            form.setValue(
-                "discNumber",
-                tags?.common.disk?.no?.toString() ?? ""
-            );
-            form.setValue(
-                "totalDiscs",
-                tags?.common.totaldiscs?.toString() ?? ""
-            );
-            form.setValue("comment", tags?.common.comment?.[0]?.text ?? "");
-            setOriginalTags({
-                title: tags?.common.title ?? "",
-                artist: tags?.common.artist ?? "",
-                album: tags?.common.album ?? "",
-                albumArtist: tags?.common.albumartist ?? "",
-                year: tags?.common.year?.toString() ?? "",
-                genre: tags?.common.genre?.[0] ?? "",
-                trackNumber: tags?.common.track?.no?.toString() ?? "",
-                totalTracks: tags?.common.totaltracks?.toString() ?? "",
-                discNumber: tags?.common.disk?.no?.toString() ?? "",
-                totalDiscs: tags?.common.totaldiscs?.toString() ?? "",
-            });
+    const file = files.find((f) => f.id === selectedFile);
+    const query = useQuery({
+        queryKey: ["tags", selectedFile],
+        queryFn: async () => {
+            if (!file?.data) return null;
+            const blob = new Blob([file.data]);
+            return getTags(blob);
+        },
+        enabled: !!file?.data,
+    });
 
-            setIsChanged(false);
-        }
-    }, [
-        files,
-        form,
-        selectedFile,
-        setIsChanged,
-        tags?.common.album,
-        tags?.common.albumartist,
-        tags?.common.artist,
-        tags?.common.comment,
-        tags?.common.disk?.no,
-        tags?.common.genre,
-        tags?.common.title,
-        tags?.common.totaldiscs,
-        tags?.common.totaltracks,
-        tags?.common.track?.no,
-        tags?.common.year,
-    ]);
+    if (query.isLoading) {
+        console.log("loading");
+    }
+
+    if (query.error) {
+        console.log("error");
+    }
+
+    if (query.data) {
+        const tags = query.data;
+        console.log(tags);
+    }
+
+    // useEffect(() => {
+    //     if (selectedFile && files.length > 0 && files[0]?.data) {
+    //         const file = files.find((f) => f.id === selectedFile);
+    //         const blob = new Blob([file?.data as BlobPart]);
+    //         getTags(blob)
+    //             .then((e) => {
+    //                 setTags(e);
+    //             })
+    //             .catch((error) => {
+    //                 console.error(error);
+    //             });
+    //         form.setValue("title", tags?.common.title ?? "");
+    //         form.setValue("artist", tags?.common.artist ?? "");
+    //         form.setValue("album", tags?.common.album ?? "");
+    //         form.setValue("year", tags?.common.year?.toString() ?? "");
+    //         form.setValue("genre", tags?.common.genre?.[0] ?? "");
+    //         form.setValue(
+    //             "trackNumber",
+    //             tags?.common.track?.no?.toString() ?? ""
+    //         );
+    //         form.setValue(
+    //             "totalTracks",
+    //             tags?.common.totaltracks?.toString() ?? ""
+    //         );
+    //         form.setValue(
+    //             "discNumber",
+    //             tags?.common.disk?.no?.toString() ?? ""
+    //         );
+    //         form.setValue(
+    //             "totalDiscs",
+    //             tags?.common.totaldiscs?.toString() ?? ""
+    //         );
+    //         form.setValue("comment", tags?.common.comment?.[0]?.text ?? "");
+    //         setOriginalTags({
+    //             title: tags?.common.title ?? "",
+    //             artist: tags?.common.artist ?? "",
+    //             album: tags?.common.album ?? "",
+    //             albumArtist: tags?.common.albumartist ?? "",
+    //             year: tags?.common.year?.toString() ?? "",
+    //             genre: tags?.common.genre?.[0] ?? "",
+    //             trackNumber: tags?.common.track?.no?.toString() ?? "",
+    //             totalTracks: tags?.common.totaltracks?.toString() ?? "",
+    //             discNumber: tags?.common.disk?.no?.toString() ?? "",
+    //             totalDiscs: tags?.common.totaldiscs?.toString() ?? "",
+    //         });
+
+    //         setIsChanged(false);
+    //     }
+    // }, [files, form, selectedFile, setIsChanged, tags]);
 
     function onSubmit(data: FormSchema) {
         console.log(data);
