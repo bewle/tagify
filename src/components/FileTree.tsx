@@ -69,9 +69,9 @@ export function FileTree() {
                                     variant="link"
                                     className="justify-start max-w-full p-0 pr-6 text-[13px] tracking-wide"
                                 >
-                                    <span className="truncate">
+                                    <p title={file.name} className="truncate">
                                         {file.name}
-                                    </span>
+                                    </p>
                                 </Button>
                             </ContextMenuTrigger>
                             <ContextMenuContent>

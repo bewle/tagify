@@ -118,8 +118,8 @@ export default function FileEditorForm() {
             <div className="flex justify-between gap-2 text-2xl font-bold">
                 <div className="flex items-start gap-2 max-w-[calc(40vw)]">
                     {isChanged && <span>*</span>}
-                    <p className="mb-6 truncate">
-                        {files.find((f) => f.id === selectedFile)?.name}
+                    <p title={file?.name} className="mb-6 truncate">
+                        {file?.name}
                     </p>
                 </div>
                 <div className="flex gap-4">
@@ -131,9 +131,14 @@ export default function FileEditorForm() {
                         }}
                         variant="destructive"
                     >
-                        discard
+                        reset
                     </Button>
-                    <Button>save</Button>
+                    <Button
+                        disabled={!isChanged}
+                        onClick={form.handleSubmit(onSubmit)}
+                    >
+                        save
+                    </Button>
                 </div>
             </div>
             {query.data && (
