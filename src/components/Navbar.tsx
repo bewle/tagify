@@ -6,7 +6,7 @@ export default function Navbar() {
             <div className="container flex items-center justify-between h-full ">
                 <p className="text-3xl font-bold">tagify</p>
                 <p className="text-sm tracking-wider text-muted-foreground">
-                    v0.0.1. made with ❤️
+                    {process.env.VERSION} made with ❤️
                 </p>
                 <div className="flex gap-2">
                     <ThemeToggle variant="outline" />

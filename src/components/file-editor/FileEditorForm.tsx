@@ -7,18 +7,16 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useFilesStore } from "@/lib/store/files";
 import { getTags } from "@/lib/utils/get-tags";
 import { useEffect, useState } from "react";
-import { ImagePlus, LoaderCircle } from "lucide-react";
+import { ImagePlus } from "lucide-react";
 import CoverPreview from "./form/CoverPreview";
 import TagHoverCard from "./form/TagHoverCard";
 import { useIsChangedStore } from "@/lib/store/is-changed";
 import { Textarea } from "../ui/textarea";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "../ui/button";
-import { Card } from "../ui/card";
 import { Skeleton } from "../ui/skeleton";
 import { Label } from "../ui/label";
 import TagFormField from "./form/TagFormField";
