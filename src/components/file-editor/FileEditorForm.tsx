@@ -20,6 +20,7 @@ import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import { Label } from "../ui/label";
 import TagFormField from "./form/TagFormField";
+import { Card, CardHeader, CardTitle } from "../ui/card";
 
 export type TagFormSchema = {
     artist?: string;
@@ -156,7 +157,7 @@ export default function FileEditorForm() {
                         </div>
                     </div>
                     {query.data && (
-                        <div className="flex gap-4">
+                        <div className="flex h-full gap-4">
                             <div className="flex flex-col flex-1 gap-4">
                                 <div className="flex gap-4 *:flex-1">
                                     <TagFormField
@@ -206,7 +207,7 @@ export default function FileEditorForm() {
                                     )}
                                 />
                             </div>
-                            <div className="flex flex-col w-64 gap-4">
+                            <div className="flex flex-col w-64 h-full gap-4">
                                 {query.data?.common.picture?.[0]?.data ? (
                                     <CoverPreview tags={query.data} />
                                 ) : (
@@ -243,6 +244,11 @@ export default function FileEditorForm() {
                                         hoverCardText="the total number of tracks in the album"
                                     />
                                 </div>
+                                <Card className="box-border flex-1">
+                                    <CardHeader>
+                                        <CardTitle>test</CardTitle>
+                                    </CardHeader>
+                                </Card>
                             </div>
                         </div>
                     )}
