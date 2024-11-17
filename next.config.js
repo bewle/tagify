@@ -3,7 +3,7 @@
  * for Docker builds.
  */
 import { execSync } from "child_process";
-import pkg from "./package.json";
+import packageJson from "./package.json" assert { type: "json" };
 import "./src/env.js";
 
 const commitHash = execSync("git log --pretty=format:%h -n1")
@@ -14,7 +14,7 @@ const commitHash = execSync("git log --pretty=format:%h -n1")
 /** @type {import("next").NextConfig} */
 const config = {
     env: {
-        VERSION: pkg.version,
+        VERSION: packageJson.version,
         COMMIT_HASH: commitHash,
     },
 };
