@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
@@ -8,10 +9,15 @@ export default function Navbar() {
                 <div className="flex items-center gap-2">
                     <p>made with ❤️</p>
                     <p className="text-sm tracking-wider text-muted-foreground">
-                        v{process.env.VERSION} (
-                        <span className="text-[10px]">
-                            {process.env.COMMIT_HASH}
-                        </span>
+                        (
+                        <Link
+                            target="_blank"
+                            href={`https://github.com/bewle/tagify`}
+                        >
+                            <span className="text-[10px] hover:underline">
+                                {process.env.COMMIT_HASH}
+                            </span>
+                        </Link>
                         )
                     </p>
                 </div>
