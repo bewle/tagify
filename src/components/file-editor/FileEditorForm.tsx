@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import type NodeID3 from "node-id3";
 import {
     Form,
     FormControl,
@@ -22,7 +21,6 @@ import { Skeleton } from "../ui/skeleton";
 import { Label } from "../ui/label";
 import TagFormField from "./form/TagFormField";
 import { Card, CardHeader, CardTitle } from "../ui/card";
-import { writeTags } from "@/lib/utils/write-tags";
 
 export type TagFormSchema = {
     artist?: string;
